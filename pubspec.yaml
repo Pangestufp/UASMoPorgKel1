@@ -1,0 +1,36 @@
+name: umkmfirebase
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core:
+  cloud_firestore:
+  path_provider:
+  image_picker:
+  firebase_storage:
+  path:
+  pdf:
+  curved_navigation_bar:
+  lottie:
+  flutter_animate:
+  bounce_tapper:
+  intl:
+  firebase_auth:
+  provider:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/images/
