@@ -113,117 +113,124 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              top: 16,
-                              left: 16,
-                              right: 16,
-                              bottom:
-                                  MediaQuery.of(context).viewInsets.bottom + 16,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Form(
-                                    autovalidateMode: AutovalidateMode.always,
-                                    child: Column(
-                                      children: [
-                                        TextFormField(
-                                          decoration: InputDecoration(
-                                              labelText: "Nama Barang"),
-                                          controller: _namaBarangController,
-                                        ),
-                                        TextFormField(
-                                          decoration: InputDecoration(
-                                              labelText: "Deskripsi Barang"),
-                                          controller:
-                                              _deskripsiBarangController,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await _pickImage();
-                                            if (mounted) {
-                                              setState(() {});
-                                            }
-                                          },
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                4,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.blue,
-                                                    width: 2)),
-                                            child: _image == null
-                                                ? Image.file(
-                                              File(barang.urlFotoBarang),
-                                              fit: BoxFit.cover,
-                                            )
-                                                : Image.file(
-                                                    _image!,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                          return StatefulBuilder(
+                              builder: (context, StateSetter setModalState) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                top: 16,
+                                left: 16,
+                                right: 16,
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom +
+                                        16,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Form(
+                                      autovalidateMode: AutovalidateMode.always,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            decoration: InputDecoration(
+                                                labelText: "Nama Barang"),
+                                            controller: _namaBarangController,
                                           ),
-                                        ),
-                                        TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              labelText: "Harga Beli Barang"),
-                                          controller: _hargaBeliController,
-                                        ),
-                                        TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              labelText: "Harga Jual Barang"),
-                                          controller: _hargaJualController,
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            String imageUrl;
-                                            if(_image!=null){
-                                              imageUrl = await AppServices
-                                                  .saveFileLocally(_image!);
-                                            }else{
-                                              imageUrl=barang.urlFotoBarang;
-                                            }
+                                          TextFormField(
+                                            decoration: InputDecoration(
+                                                labelText: "Deskripsi Barang"),
+                                            controller:
+                                                _deskripsiBarangController,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _pickImage();
 
-                                            AppServices.updateBarang(Barang(
-                                              idBarang: barang.idBarang,
-                                                idUser: widget.user.uid,
-                                                namaBarang:
-                                                    _namaBarangController.text,
-                                                deskripsiBarang:
-                                                    _deskripsiBarangController
-                                                        .text,
-                                                urlFotoBarang: imageUrl,
-                                                hargaJual: int.parse(
-                                                    _hargaJualController.text),
-                                                hargaBeli: int.parse(
-                                                    _hargaBeliController.text),
-                                                jumlahStock: 0));
+                                              setModalState(() {});
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  4,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.blue,
+                                                      width: 2)),
+                                              child: _image == null
+                                                  ? Image.file(
+                                                      File(
+                                                          barang.urlFotoBarang),
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Image.file(
+                                                      _image!,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                            ),
+                                          ),
+                                          TextFormField(
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                                labelText: "Harga Beli Barang"),
+                                            controller: _hargaBeliController,
+                                          ),
+                                          TextFormField(
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                                labelText: "Harga Jual Barang"),
+                                            controller: _hargaJualController,
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              String imageUrl;
+                                              if (_image != null) {
+                                                imageUrl = await AppServices
+                                                    .saveFileLocally(_image!);
+                                              } else {
+                                                imageUrl = barang.urlFotoBarang;
+                                              }
 
-                                            setState(() {
-                                              _image = null;
-                                              _namaBarangController.clear();
-                                              _deskripsiBarangController
-                                                  .clear();
-                                              _hargaBeliController.clear();
-                                              _hargaJualController.clear();
-                                            });
-                                            await _fetchBarangList();
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Edit"),
-                                        ),
-                                      ],
-                                    ))
-                              ],
-                            ),
-                          );
+                                              AppServices.updateBarang(Barang(
+                                                  idBarang: barang.idBarang,
+                                                  idUser: widget.user.uid,
+                                                  namaBarang:
+                                                      _namaBarangController
+                                                          .text,
+                                                  deskripsiBarang:
+                                                      _deskripsiBarangController
+                                                          .text,
+                                                  urlFotoBarang: imageUrl,
+                                                  hargaJual: int.parse(
+                                                      _hargaJualController
+                                                          .text),
+                                                  hargaBeli: int.parse(
+                                                      _hargaBeliController
+                                                          .text),
+                                                  jumlahStock: 0));
+
+                                              setState(() {
+                                                _image = null;
+                                                _namaBarangController.clear();
+                                                _deskripsiBarangController
+                                                    .clear();
+                                                _hargaBeliController.clear();
+                                                _hargaJualController.clear();
+                                              });
+                                              await _fetchBarangList();
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("Edit"),
+                                          ),
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            );
+                          });
                         },
                       );
                     },
@@ -288,108 +295,112 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  top: 16,
-                  left: 16,
-                  right: 16,
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Form(
-                        autovalidateMode: AutovalidateMode.always,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration:
-                                  InputDecoration(labelText: "Nama Barang"),
-                              controller: _namaBarangController,
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: "Deskripsi Barang"),
-                              controller: _deskripsiBarangController,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                await _pickImage();
-                                if (mounted) {
-                                  setState(() {});
-                                }
-                              },
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height / 4,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.blue, width: 2)),
-                                child: _image == null
-                                    ? Container(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.image_not_supported),
-                                            Text("Tidak ada gambar dipilih")
-                                          ],
-                                        ),
-                                      )
-                                    : Image.file(
-                                        _image!,
-                                        fit: BoxFit.cover,
-                                      ),
+              return StatefulBuilder(
+                  builder: (context, StateSetter setModalState) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: 16,
+                    left: 16,
+                    right: 16,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Form(
+                          autovalidateMode: AutovalidateMode.always,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                decoration:
+                                    InputDecoration(labelText: "Nama Barang"),
+                                controller: _namaBarangController,
                               ),
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  labelText: "Harga Beli Barang"),
-                              controller: _hargaBeliController,
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  labelText: "Harga Jual Barang"),
-                              controller: _hargaJualController,
-                            ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                String imageUrl =
-                                    await AppServices.saveFileLocally(_image!);
+                              TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Deskripsi Barang"),
+                                controller: _deskripsiBarangController,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await _pickImage();
 
-                                AppServices.createBarang(Barang(
-                                    idUser: widget.user.uid,
-                                    namaBarang: _namaBarangController.text,
-                                    deskripsiBarang:
-                                        _deskripsiBarangController.text,
-                                    urlFotoBarang: imageUrl,
-                                    hargaJual:
-                                        int.parse(_hargaJualController.text),
-                                    hargaBeli:
-                                        int.parse(_hargaBeliController.text),
-                                    jumlahStock: 0));
-                                setState(() {
-                                  _image = null;
-                                  _namaBarangController.clear();
-                                  _deskripsiBarangController.clear();
-                                  _hargaBeliController.clear();
-                                  _hargaJualController.clear();
-                                });
-                                await _fetchBarangList();
-                                Navigator.pop(context);
-                                setState(() {});
-                              },
-                              child: Text("Tambahkan"),
-                            ),
-                          ],
-                        ))
-                  ],
-                ),
-              );
+                                  setModalState(() {});
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height / 4,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.blue, width: 2)),
+                                  child: _image == null
+                                      ? Container(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.image_not_supported),
+                                              Text("Tidak ada gambar dipilih")
+                                            ],
+                                          ),
+                                        )
+                                      : Image.file(
+                                          _image!,
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    labelText: "Harga Beli Barang"),
+                                controller: _hargaBeliController,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                    labelText: "Harga Jual Barang"),
+                                controller: _hargaJualController,
+                              ),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  String imageUrl =
+                                      await AppServices.saveFileLocally(
+                                          _image!);
+
+                                  AppServices.createBarang(Barang(
+                                      idUser: widget.user.uid,
+                                      namaBarang: _namaBarangController.text,
+                                      deskripsiBarang:
+                                          _deskripsiBarangController.text,
+                                      urlFotoBarang: imageUrl,
+                                      hargaJual:
+                                          int.parse(_hargaJualController.text),
+                                      hargaBeli:
+                                          int.parse(_hargaBeliController.text),
+                                      jumlahStock: 0));
+                                  setState(() {
+                                    _image = null;
+                                    _namaBarangController.clear();
+                                    _deskripsiBarangController.clear();
+                                    _hargaBeliController.clear();
+                                    _hargaJualController.clear();
+                                  });
+                                  await _fetchBarangList();
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
+                                child: Text("Tambahkan"),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                );
+              });
             },
           );
         },

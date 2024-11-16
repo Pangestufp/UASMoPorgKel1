@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:umkmfirebase/models/barang.dart';
 import 'package:umkmfirebase/models/cacatan.dart';
 import 'package:umkmfirebase/models/invoice.dart';
+import 'package:umkmfirebase/models/pengingat.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:path/path.dart' as path;
 
@@ -151,6 +152,46 @@ class AppServices {
         .doc(cacatan.idCacatan)
         .delete();
   }
+
+
+  //CRUD Pengingat
+  static Future<void> createPengingat(Pengingat pengingat) async {
+    CollectionReference pengingatRef =
+    FirebaseFirestore.instance.collection('pengingat');
+    await pengingatRef.add(pengingat.toFirestore());
+  }
+
+  static Future<List<Pengingat>> readAllPengingat(UserModel user) async {
+    QuerySnapshot pengingatSnapshot = await FirebaseFirestore.instance
+        .collection('pengingat')
+        .where('idUser', isEqualTo: user.uid)
+        .get();
+
+    List<Pengingat> pengingatList = pengingatSnapshot.docs.map((doc) {
+      return Pengingat.fromFirestore(doc);
+    }).toList();
+
+    return pengingatList;
+  }
+
+  static Future<void> updatePengingat(Pengingat pengingat) async {
+    await FirebaseFirestore.instance
+        .collection('pengingat')
+        .doc(pengingat.idPengingat)
+        .update({
+      'idUser': pengingat.idUser,
+      'tanggal': pengingat.tanggal,
+      'isi': pengingat.isi,
+    });
+  }
+
+  static Future<void> deletePengingat(Pengingat pengingat) async {
+    await FirebaseFirestore.instance
+        .collection('pengingat')
+        .doc(pengingat.idPengingat)
+        .delete();
+  }
+
 
   //UploadFile
   static Future<String> saveFileLocally(File file) async {
