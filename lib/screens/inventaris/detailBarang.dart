@@ -31,22 +31,45 @@ class _DetailbarangState extends State<Detailbarang> {
           children: [
             Center(
               child: widget.benda.urlFotoBarang.isNotEmpty
-                  ? Image.file(
-                File(widget.benda.urlFotoBarang),
-                width: 200,
-                height: 200,
-                fit: BoxFit.cover,
-              )
+                  ? FutureBuilder<bool>(
+                      future: File(widget.benda.urlFotoBarang).exists(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+
+                        if (snapshot.hasData && snapshot.data == true) {
+                          return Image.file(
+                            File(widget.benda.urlFotoBarang),
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return Container(
+                            width: 200,
+                            height: 200,
+                            color: Colors.grey,
+                            child: Icon(
+                              Icons.image_not_supported,
+                              color: Colors.white,
+                              size: 100,
+                            ),
+                          );
+                        }
+                      },
+                    )
                   : Container(
-                width: 200,
-                height: 200,
-                color: Colors.grey,
-                child: Icon(
-                  Icons.image_not_supported,
-                  color: Colors.white,
-                  size: 100,
-                ),
-              ),
+                      width: 200,
+                      height: 200,
+                      color: Colors.grey,
+                      child: Icon(
+                        Icons.image_not_supported,
+                        color: Colors.white,
+                        size: 100,
+                      ),
+                    ),
             ),
             SizedBox(height: 16),
             Text(
@@ -58,7 +81,6 @@ class _DetailbarangState extends State<Detailbarang> {
               ),
             ),
             SizedBox(height: 8),
-
             Text(
               widget.benda.deskripsiBarang,
               style: TextStyle(
@@ -67,7 +89,6 @@ class _DetailbarangState extends State<Detailbarang> {
               ),
             ),
             SizedBox(height: 16),
-
             Text(
               'Harga Beli: Rp${widget.benda.hargaBeli}',
               style: TextStyle(

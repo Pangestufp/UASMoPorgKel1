@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:umkmfirebase/models/pengingat.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/screens/cacatan/cacatanPage.dart';
 import 'package:umkmfirebase/screens/home/homePage.dart';
@@ -28,6 +29,14 @@ class _BottomNavState extends State<BottomNav> {
 
   Widget? _currentPage;
   String? _currentNamePage;
+  int? jumlahPengingat;
+
+  Future<void> getJumlahPengingat() async {
+    List<Pengingat> pengingatList = await AppServices.readAllPengingat(user!);
+
+    jumlahPengingat = pengingatList.length;
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -38,7 +47,7 @@ class _BottomNavState extends State<BottomNav> {
   Future<void> fetchUserData() async {
     String? uid = widget.firebaseUser.uid;
     UserModel? fetchedUser = await AppServices.getUserData(uid!);
-    setState(() {
+    setState(() async {
       user = fetchedUser;
 
       _listPages = [
@@ -61,6 +70,8 @@ class _BottomNavState extends State<BottomNav> {
 
       _currentPage = _listPages[0];
       _currentNamePage = _listNamePages[0];
+      await getJumlahPengingat();
+
     });
   }
 
@@ -185,7 +196,7 @@ class _BottomNavState extends State<BottomNav> {
                                 color: Colors.amber,
                                 size: 40,
                               ),
-                              trailing: Container(
+                              trailing: jumlahPengingat!=0? Container(
                                 width: 40,
                                 height: 40,
                                 decoration: BoxDecoration(
@@ -194,7 +205,7 @@ class _BottomNavState extends State<BottomNav> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "3",
+                                    "${jumlahPengingat}",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -202,12 +213,12 @@ class _BottomNavState extends State<BottomNav> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ):null,
                               title: Text("Pengingat"),
                               onTap: () {
                                 Navigator.pop(context);
                                 Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => PengingatPage()));
+                                    MaterialPageRoute(builder: (context) => PengingatPage(user: user!,)));
                               },
                             ),
                             Divider(color: Colors.amber,),

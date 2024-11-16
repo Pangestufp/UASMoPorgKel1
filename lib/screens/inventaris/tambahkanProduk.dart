@@ -161,10 +161,41 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                                       color: Colors.blue,
                                                       width: 2)),
                                               child: _image == null
-                                                  ? Image.file(
-                                                      File(
-                                                          barang.urlFotoBarang),
-                                                      fit: BoxFit.cover,
+                                                  ? FutureBuilder<bool>(
+                                                      future: File(barang
+                                                              .urlFotoBarang)
+                                                          .exists(),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .waiting) {
+                                                          return CircularProgressIndicator();
+                                                        }
+
+                                                        if (snapshot.hasData &&
+                                                            snapshot.data ==
+                                                                true) {
+                                                          return Image.file(
+                                                            File(barang
+                                                                .urlFotoBarang),
+                                                            fit: BoxFit.cover,
+                                                            width:
+                                                                double.infinity,
+                                                          );
+                                                        } else {
+                                                          return Center(
+                                                            child: Icon(
+                                                              Icons
+                                                                  .image_not_supported,
+                                                              size: 50,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
                                                     )
                                                   : Image.file(
                                                       _image!,
@@ -243,10 +274,30 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: Image.file(
-                              File(barang.urlFotoBarang),
-                              fit: BoxFit.cover,
-                              width: double.infinity,
+                            child: FutureBuilder<bool>(
+                              future: File(barang.urlFotoBarang).exists(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                }
+
+                                if (snapshot.hasData && snapshot.data == true) {
+                                  return Image.file(
+                                    File(barang.urlFotoBarang),
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  );
+                                } else {
+                                  return Center(
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 50,
+                                      color: Colors.grey,
+                                    ),
+                                  );
+                                }
+                              },
                             ),
                           ),
                           Padding(
