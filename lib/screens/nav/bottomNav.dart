@@ -6,8 +6,10 @@ import 'package:umkmfirebase/screens/cacatan/cacatanPage.dart';
 import 'package:umkmfirebase/screens/home/homePage.dart';
 import 'package:umkmfirebase/screens/inventaris/inventarisPage.dart';
 import 'package:umkmfirebase/screens/laporanKeuangan/keuanganPage.dart';
+import 'package:umkmfirebase/screens/pengingat/pengingatPage.dart';
 import 'package:umkmfirebase/screens/penjualan/penjualanPage.dart';
 import 'package:umkmfirebase/services/appServices.dart';
+import 'package:umkmfirebase/services/auth.dart';
 
 class BottomNav extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -43,7 +45,9 @@ class _BottomNavState extends State<BottomNav> {
         HomePage(changePage: _changePage, user: user!),
         InventarisPage(user: user!),
         CacatanPage(user: user!),
-        PenjualanPage(user: user!,),
+        PenjualanPage(
+          user: user!,
+        ),
         KeuanganPage(user: user!),
       ];
 
@@ -60,7 +64,6 @@ class _BottomNavState extends State<BottomNav> {
     });
   }
 
-
   void _changePage(int selectedIndex) {
     setState(() {
       _currentIndex = selectedIndex;
@@ -68,6 +71,9 @@ class _BottomNavState extends State<BottomNav> {
       _currentNamePage = _listNamePages[selectedIndex];
     });
   }
+
+  final AuthService authService = new AuthService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +141,121 @@ class _BottomNavState extends State<BottomNav> {
                 ),
               ],
               onTap: (selectedIndex) => _changePage(selectedIndex),
-            ));
+            ),
+            drawer: _currentIndex == 0
+                ? Drawer(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        UserAccountsDrawerHeader(
+                          currentAccountPicture: Icon(
+                            Icons.face,
+                            size: 48.0,
+                            color: Colors.white,
+                          ),
+                          accountName: Text(
+                            "${user!.namaUMKM}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54),
+                          ),
+                          accountEmail: Text("${user!.alamatUMKM}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54)),
+                          otherAccountsPictures: <Widget>[
+                            Icon(
+                              Icons.bookmark_border,
+                              color: Colors.amber,
+                            )
+                          ],
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/drawerGambar.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(
+                                Icons.notification_important,
+                                color: Colors.amber,
+                                size: 40,
+                              ),
+                              trailing: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "3",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              title: Text("Pengingat"),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => PengingatPage()));
+                              },
+                            ),
+                            Divider(color: Colors.amber,),
+                            ListTile(
+                              leading: Icon(
+                                Icons.save_alt,
+                                color: Colors.amber,
+                                size: 40,
+                              ),
+                              title: Text("Invoice"),
+                              onTap: () {
+                                Navigator.pop(context);
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) => Invoice()));
+                              },
+                            ),
+                            Divider(color: Colors.amber,),
+                            ListTile(
+                              leading: Icon(
+                                Icons.settings,
+                                color: Colors.amber,
+                                size: 40,
+                              ),
+                              title: Text("Setting"),
+                              onTap: () {},
+                            ),
+                            Divider(color: Colors.amber,),
+                            ListTile(
+                              leading: Icon(
+                                Icons.logout_sharp,
+                                color: Colors.red,
+                                size: 40,
+                              ),
+                              title: Text(
+                                "Log Out",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onTap: () async {
+                                Navigator.pop(context);
+                                await authService.signOut();
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                : null,
+          );
   }
 }
