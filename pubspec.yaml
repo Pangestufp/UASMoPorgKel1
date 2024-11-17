@@ -26,6 +26,7 @@ dependencies:
   flutter_pdfview:
   dio:
   permission_handler:
+  fl_chart:
 
 dev_dependencies:
   flutter_test:
