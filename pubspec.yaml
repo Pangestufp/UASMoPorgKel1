@@ -23,6 +23,9 @@ dependencies:
   intl:
   firebase_auth:
   provider:
+  flutter_pdfview:
+  dio:
+  permission_handler:
 
 dev_dependencies:
   flutter_test:

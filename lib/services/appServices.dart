@@ -1,13 +1,17 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:umkmfirebase/models/barang.dart';
 import 'package:umkmfirebase/models/cacatan.dart';
 import 'package:umkmfirebase/models/invoice.dart';
 import 'package:umkmfirebase/models/pengingat.dart';
+import 'package:umkmfirebase/models/transaksi.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:path/path.dart' as path;
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class AppServices {
   //data User
@@ -200,4 +204,134 @@ class AppServices {
     await file.copy(localPath);
     return localPath;
   }
+
+
+
+
+
+  static Future<String?> createInvoicePDF(Invoice invoice, UserModel user) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        margin: pw.EdgeInsets.all(32),
+        build: (pw.Context context) {
+          // Hitung total keseluruhan harga
+          final totalKeseluruhan = invoice.transaksiList.fold<double>(
+            0,
+                (sum, transaksi) => sum + (transaksi.barang.hargaJual * transaksi.total),
+          );
+
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                'Invoice',
+                style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+              ),
+              pw.SizedBox(height: 20),
+              pw.Text('Nama UMKM: ${user.namaUMKM}'),
+              pw.Text('Alamat UMKM: ${user.alamatUMKM}'),
+              pw.Text('Nama Pelanggan: ${invoice.namaPelanggan}'),
+              pw.Text('Alamat: ${invoice.alamat}'),
+              pw.Text('Tanggal: ${DateFormat('EEEE, dd MMMM yyyy').format(DateTime.parse(invoice.waktu))}'),
+              pw.SizedBox(height: 20),
+              pw.Text(
+                'Daftar Transaksi',
+                style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Table(
+                border: pw.TableBorder.all(),
+                children: [
+                  pw.TableRow(
+                    decoration: pw.BoxDecoration(color: PdfColors.grey300),
+                    children: [
+                      pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text('Nama Barang', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                      ),
+                      pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text('Deskripsi Barang', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                      ),
+                      pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text('Jumlah', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                      ),
+                      pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text('Harga per Item', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                      ),
+                      pw.Padding(
+                        padding: pw.EdgeInsets.all(8),
+                        child: pw.Text('Total Harga', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                  ...invoice.transaksiList.map(
+                        (Transaksi transaksi) => pw.TableRow(
+                      children: [
+                        pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(transaksi.barang.namaBarang),
+                        ),
+                        pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(transaksi.barang.deskripsiBarang),
+                        ),
+                        pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text(transaksi.total.toString()),
+                        ),
+                        pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text("Rp ${transaksi.barang.hargaJual.toStringAsFixed(2)}"),
+                        ),
+                        pw.Padding(
+                          padding: pw.EdgeInsets.all(8),
+                          child: pw.Text("Rp ${(transaksi.barang.hargaJual * transaksi.total).toStringAsFixed(2)}"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              pw.SizedBox(height: 20),
+              pw.Divider(),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text(
+                    'Total Keseluruhan:',
+                    style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
+                  ),
+                  pw.Text(
+                    "Rp ${totalKeseluruhan.toStringAsFixed(2)}",
+                    style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    try {
+      final outputDir = await getTemporaryDirectory();
+      final filePath = '${outputDir.path}/invoice_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final file = File(filePath);
+      await file.writeAsBytes(await pdf.save());
+
+      print('Invoice PDF berhasil dibuat di: $filePath');
+      return filePath;
+    } catch (e) {
+      print('Terjadi kesalahan saat membuat PDF: $e');
+      return null;
+    }
+  }
+
+
 }
