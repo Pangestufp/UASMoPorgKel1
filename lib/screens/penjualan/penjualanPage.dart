@@ -35,7 +35,9 @@ class _PenjualanPageState extends State<PenjualanPage> {
   void addTransaksi(Barang barang) {
     for (var transaksi in _transaksiList) {
       if (transaksi.barang.idBarang == barang.idBarang) {
-        transaksi.total += 1;
+        if(transaksi.total<barang.jumlahStock){
+          transaksi.total += 1;
+        }
         return;
       }
     }
@@ -115,7 +117,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                   final barang = _filteredBarangList[index];
                   return GestureDetector(
                     onTap: () {
-                      if(barang.jumlahStock>0){
+                      if(barang.jumlahStock>0) {
                         addTransaksi(barang);
                       }
                       setState(() {});
@@ -163,19 +165,19 @@ class _PenjualanPageState extends State<PenjualanPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       barang.namaBarang,
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       barang.jumlahStock.toString(),
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
