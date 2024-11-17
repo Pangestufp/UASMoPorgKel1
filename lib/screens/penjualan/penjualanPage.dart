@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:umkmfirebase/models/barang.dart';
+import 'package:umkmfirebase/models/cacatan.dart';
 import 'package:umkmfirebase/models/invoice.dart';
 import 'package:umkmfirebase/models/transaksi.dart';
 import 'package:umkmfirebase/models/userModel.dart';
@@ -39,6 +40,25 @@ class _PenjualanPageState extends State<PenjualanPage> {
       }
     }
     _transaksiList.add(Transaksi(barang: barang, total: 1));
+  }
+
+  Future<void> updateStock() async {
+    for (var transaksi in _transaksiList) {
+      transaksi.barang.jumlahStock -= transaksi.total;
+
+      await AppServices.updateBarang(transaksi.barang);
+    }
+  }
+
+  int hitungKeuntungan() {
+    int totalKeuntungan = 0;
+
+    for (var transaksi in _transaksiList) {
+      int keuntunganPerTransaksi = (transaksi.barang.hargaJual - transaksi.barang.hargaBeli) * transaksi.total;
+      totalKeuntungan += keuntunganPerTransaksi;
+    }
+
+    return totalKeuntungan;
   }
 
   Future<void> _fetchBarangList() async {
@@ -95,7 +115,9 @@ class _PenjualanPageState extends State<PenjualanPage> {
                   final barang = _filteredBarangList[index];
                   return GestureDetector(
                     onTap: () {
-                      addTransaksi(barang);
+                      if(barang.jumlahStock>0){
+                        addTransaksi(barang);
+                      }
                       setState(() {});
                     },
                     child: Card(
@@ -140,12 +162,24 @@ class _PenjualanPageState extends State<PenjualanPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  barang.namaBarang,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                Row(
+                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      barang.namaBarang,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      barang.jumlahStock.toString(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -198,6 +232,12 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                 )),
                             TextButton(
                                 onPressed: () async {
+                                  await updateStock();
+
+                                  AppServices.createCacatan(
+                                      Cacatan(idUser: widget.user.uid, jenisCacatan: "pemasukan", tanggal: DateTime.now().toString(), isiCacatan: "Penjualan Item atas nama ${_namaController.text}", jumlah: hitungKeuntungan())
+                                  );
+                                  
                                   String? pdf =
                                       await AppServices.createInvoicePDF(
                                           Invoice(
@@ -244,7 +284,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                   final transaksi = _transaksiList[index];
                   return ListTile(
                     title: Text(transaksi.barang.namaBarang),
-                    subtitle: Text(transaksi.barang.deskripsiBarang),
+                    subtitle: Text(AppServices.formatRupiah(transaksi.barang.hargaJual)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -265,7 +305,9 @@ class _PenjualanPageState extends State<PenjualanPage> {
                         ),
                         IconButton(
                             onPressed: () {
-                              transaksi.total = transaksi.total + 1;
+                              if(transaksi.barang.jumlahStock>transaksi.total){
+                                transaksi.total = transaksi.total + 1;
+                              }
                               setState(() {});
                             },
                             icon: Icon(Icons.add)),

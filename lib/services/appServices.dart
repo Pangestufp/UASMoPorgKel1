@@ -134,6 +134,8 @@ class AppServices {
       return Cacatan.fromFirestore(doc);
     }).toList();
 
+    cacatanList.sort((comp1, comp2) => comp2.tanggal.compareTo(comp1.tanggal));
+
     return cacatanList;
   }
 
@@ -217,10 +219,9 @@ class AppServices {
         pageFormat: PdfPageFormat.a4,
         margin: pw.EdgeInsets.all(32),
         build: (pw.Context context) {
-          // Hitung total keseluruhan harga
-          final totalKeseluruhan = invoice.transaksiList.fold<double>(
+          final totalKeseluruhan = invoice.transaksiList.fold<int>(
             0,
-                (sum, transaksi) => sum + (transaksi.barang.hargaJual * transaksi.total),
+                (sum, transaksi) => sum + (transaksi.barang.hargaJual * transaksi.total).toInt(),
           );
 
           return pw.Column(
@@ -287,11 +288,11 @@ class AppServices {
                         ),
                         pw.Padding(
                           padding: pw.EdgeInsets.all(8),
-                          child: pw.Text("Rp ${transaksi.barang.hargaJual.toStringAsFixed(2)}"),
+                          child: pw.Text(AppServices.formatRupiah(transaksi.barang.hargaJual)),
                         ),
                         pw.Padding(
                           padding: pw.EdgeInsets.all(8),
-                          child: pw.Text("Rp ${(transaksi.barang.hargaJual * transaksi.total).toStringAsFixed(2)}"),
+                          child: pw.Text(AppServices.formatRupiah(transaksi.barang.hargaJual * transaksi.total)),
                         ),
                       ],
                     ),
@@ -308,7 +309,7 @@ class AppServices {
                     style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
                   ),
                   pw.Text(
-                    "Rp ${totalKeseluruhan.toStringAsFixed(2)}",
+                    AppServices.formatRupiah(totalKeseluruhan),
                     style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
                   ),
                 ],
@@ -331,6 +332,12 @@ class AppServices {
       print('Terjadi kesalahan saat membuat PDF: $e');
       return null;
     }
+  }
+
+  static String formatRupiah(int amount) {
+    final rupiah = amount.toString().replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => '.');
+
+    return 'Rp $rupiah,00';
   }
 
 
