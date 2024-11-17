@@ -91,6 +91,8 @@ class AppServices {
       return Invoice.fromFirestore(doc);
     }).toList();
 
+    invoiceList.sort((comp1, comp2) => comp2.waktu.compareTo(comp1.waktu));
+
     return invoiceList;
   }
 
