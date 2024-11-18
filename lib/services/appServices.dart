@@ -32,6 +32,7 @@ class AppServices {
     }
   }
 
+
   //CRUD Barang
   static Future<void> createBarang(Barang barang) async {
     CollectionReference barangRef =

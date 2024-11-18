@@ -39,15 +39,31 @@ class _PengingatPageState extends State<PengingatPage> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.teal[700],
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+        separatorBuilder: (context, index){
+          return Divider(
+            color: Colors.teal[700],
+            height: 2,
+          );
+        },
         itemCount: _pengingatList.length,
         itemBuilder: (context, index) {
           final pengingat = _pengingatList[index];
           return ListTile(
             title: Text("Pengingat - ${index + 1}"),
             subtitle: Text(pengingat.isi),
+            trailing: IconButton(
+                onPressed: ()async{
+                  AppServices.deletePengingat(pengingat);
+
+                  await _fetchPengingatList();
+                  setState(() {
+
+                  });
+
+            }, icon: Icon(Icons.delete,color: Colors.teal,)),
             leading: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -56,7 +72,7 @@ class _PengingatPageState extends State<PengingatPage> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
-                      color: Colors.blue),
+                      color: Colors.teal[700]),
                 ),
                 Text(DateFormat.MMM().format(DateTime.parse(pengingat.tanggal))),
               ],
