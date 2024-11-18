@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:umkmfirebase/models/barang.dart';
 import 'package:umkmfirebase/models/catatan.dart';
 import 'package:umkmfirebase/models/invoice.dart';
@@ -88,6 +89,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -96,10 +98,44 @@ class _PenjualanPageState extends State<PenjualanPage> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: "Cari Produk",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
+                  prefixIcon: Icon(Icons.search,color: Colors.teal,),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  ),
+
+                  labelStyle: TextStyle(color: Colors.teal[700]),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  )
               ),
             ),
             SizedBox(height: 10),
@@ -123,6 +159,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                       setState(() {});
                     },
                     child: Card(
+                      color: Colors.teal[700],
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -172,6 +209,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.white
                                       ),
                                     ),
                                     Text(
@@ -179,6 +217,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.white
                                       ),
                                     ),
                                   ],
@@ -188,13 +227,12 @@ class _PenjualanPageState extends State<PenjualanPage> {
                           ),
                         ],
                       ),
-                    ),
+                    ).animate().scale(),
                   );
                 },
               ),
             ),
             SizedBox(height: 10),
-            Divider(height: 1),
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
@@ -211,12 +249,74 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                 TextFormField(
                                   decoration: InputDecoration(
                                     hintText: "Nama Pelanggan",
+                                      suffixIcon: Icon(Icons.person,color: Colors.teal,),
+                                      border: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      )
                                   ),
                                   controller: _namaController,
                                 ),
                                 TextFormField(
                                   decoration: InputDecoration(
                                     hintText: "Alamat Pelanggan",
+                                    suffixIcon: Icon(Icons.place,color: Colors.teal,),
+                                      border: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      )
                                   ),
                                   controller: _alamatController,
                                 )
@@ -230,7 +330,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                 },
                                 child: Text(
                                   "Cancel",
-                                  style: TextStyle(color: Colors.amber),
+                                  style: TextStyle(color: Colors.teal),
                                 )),
                             TextButton(
                                 onPressed: () async {
@@ -269,18 +369,25 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                   Navigator.pop(context);
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>PdfViewerPage(path: pdf!)));
                                 },
-                                child: Text("Oke",
-                                    style: TextStyle(color: Colors.amber)))
+                                child: Text("Cetak",
+                                    style: TextStyle(color: Colors.teal)))
                           ],
                         );
                       });
                 },
-                child: Text("Check Out"),
+                child: Text("Check Out",style: TextStyle(color: Colors.teal),),
               ),
             ),
             SizedBox(height: 10),
+            Divider(height: 1,color: Colors.teal,),
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
+                separatorBuilder: (context, index){
+                  return Divider(
+                    color: Colors.teal[700],
+                    height: 2,
+                  );
+                },
                 itemCount: _transaksiList.length,
                 itemBuilder: (context, index) {
                   final transaksi = _transaksiList[index];

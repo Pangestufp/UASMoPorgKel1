@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:umkmfirebase/models/catatan.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
@@ -110,6 +111,7 @@ class _CatatanPageState extends State<CatatanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Padding(
@@ -171,9 +173,9 @@ class _CatatanPageState extends State<CatatanPage> {
                 ),
               ),
             ),
-          ),
+          ).animate().scale(),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -226,6 +228,8 @@ class _CatatanPageState extends State<CatatanPage> {
                       Colors.black), // Mengatur warna teks di dalam TextField
             ),
           ),
+          SizedBox(height: 15,),
+          Divider(height: 1,color: Colors.teal[700],),
           Expanded(
             child: ListView.separated(
               separatorBuilder: (context, index){
@@ -272,7 +276,7 @@ class _CatatanPageState extends State<CatatanPage> {
                         Text(DateFormat.MMM()
                             .format(DateTime.parse(catatan.tanggal))),
                       ],
-                    ));
+                    )).animate().fade();
               },
             ),
           )

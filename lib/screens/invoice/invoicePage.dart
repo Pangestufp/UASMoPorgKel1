@@ -137,7 +137,8 @@ class _InvoicePageState extends State<InvoicePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PdfViewerPage(path: invoice.urlInvoice),
+                    builder: (context) =>
+                        PdfViewerPage(path: invoice.urlInvoice),
                   ),
                 );
               },
@@ -175,7 +176,10 @@ class _InvoicePageState extends State<InvoicePage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: Text("Invoice",style: TextStyle(color: Colors.white),),
+        title: Text(
+          "Invoice",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal[700],
         actions: [
           if (_isLoading)
@@ -201,8 +205,11 @@ class _InvoicePageState extends State<InvoicePage> {
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  labelText: "Cari Pembeli",
-                    prefixIcon: Icon(Icons.search,color: Colors.teal,),
+                    labelText: "Cari Pembeli",
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.teal,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide: BorderSide(
@@ -210,7 +217,6 @@ class _InvoicePageState extends State<InvoicePage> {
                         width: 2.0,
                       ),
                     ),
-
                     labelStyle: TextStyle(color: Colors.teal[700]),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -239,8 +245,7 @@ class _InvoicePageState extends State<InvoicePage> {
                         color: Colors.teal,
                         width: 2.0,
                       ),
-                    )
-                ),
+                    )),
               ),
             ),
             Expanded(
@@ -251,5 +256,4 @@ class _InvoicePageState extends State<InvoicePage> {
       ),
     );
   }
-
 }

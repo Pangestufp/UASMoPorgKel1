@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:umkmfirebase/models/catatan.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -601,7 +602,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
                       ],
                     ),
                   ),
-                ),
+                ).animate().scale(),
     );
   }
 }
