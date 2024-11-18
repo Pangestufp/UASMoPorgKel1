@@ -118,7 +118,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
           : data.every((value) => value == 0)
           ? Center(
         child: Card(
-          margin: EdgeInsets.only(bottom: 20, left: 20),
+          margin: EdgeInsets.only(bottom: 20, top: 20),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
