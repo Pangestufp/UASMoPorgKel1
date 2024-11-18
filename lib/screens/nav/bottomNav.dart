@@ -162,30 +162,31 @@ class _BottomNavState extends State<BottomNav> {
                       children: [
                         UserAccountsDrawerHeader(
                           currentAccountPicture: Icon(
-                            Icons.face,
-                            size: 48.0,
-                            color: Colors.white,
+                            Icons.store_outlined,
+                            size: 70.0,
+                            color: Colors.teal[700],
                           ),
                           accountName: Text(
                             "${user!.namaUMKM}",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black54),
+                                fontWeight: FontWeight.bold, fontSize: 30,
+                                color: Colors.black),
                           ),
                           accountEmail: Text("${user!.alamatUMKM}",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.bold, fontSize: 15,
                                   color: Colors.black54)),
                           otherAccountsPictures: <Widget>[
                             Icon(
                               Icons.bookmark_border,
-                              color: Colors.amber,
+                              size: 35,
+                              color: Colors.teal[700],
                             )
                           ],
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
-                                  AssetImage("assets/images/drawerGambar.png"),
+                                  AssetImage("assets/images/halaman titik 3.png"),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -195,7 +196,7 @@ class _BottomNavState extends State<BottomNav> {
                             ListTile(
                               leading: Icon(
                                 Icons.notification_important,
-                                color: Colors.amber,
+                                color: Colors.teal[700],
                                 size: 40,
                               ),
                               trailing: jumlahPengingat!=0? Container(
@@ -223,11 +224,11 @@ class _BottomNavState extends State<BottomNav> {
                                     MaterialPageRoute(builder: (context) => PengingatPage(user: user!,)));
                               },
                             ),
-                            Divider(color: Colors.amber,),
+                            Divider(color: Colors.teal[700],),
                             ListTile(
                               leading: Icon(
                                 Icons.save_alt,
-                                color: Colors.amber,
+                                color: Colors.teal[700],
                                 size: 40,
                               ),
                               title: Text("Invoice"),
@@ -237,11 +238,11 @@ class _BottomNavState extends State<BottomNav> {
                                     MaterialPageRoute(builder: (context) => InvoicePage(user: user!)));
                               },
                             ),
-                            Divider(color: Colors.amber,),
+                            Divider(color: Colors.teal[700],),
                             ListTile(
                               leading: Icon(
                                 Icons.settings,
-                                color: Colors.amber,
+                                color: Colors.teal[700],
                                 size: 40,
                               ),
                               title: Text("Setting"),
@@ -249,22 +250,36 @@ class _BottomNavState extends State<BottomNav> {
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Pengaturan(user: user!,)));
                               },
                             ),
-                            Divider(color: Colors.amber,),
-                            ListTile(
-                              leading: Icon(
-                                Icons.logout_sharp,
-                                color: Colors.red,
-                                size: 40,
+                            Divider(color: Colors.teal[700],),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red, // Warna background tombol
+                                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 12.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0), // Sudut tombol bisa disesuaikan
+                                ),
                               ),
-                              title: Text(
-                                "Log Out",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                              onTap: () async {
+                              onPressed: () async {
                                 Navigator.pop(context);
                                 await authService.signOut();
                               },
+                              icon: Icon(
+                                Icons.logout_sharp,
+                                color: Colors.white, // Warna ikon jadi putih agar kontras
+                                size: 24,
+                              ),
+                              label: Text(
+                                "Log Out",
+                                style: TextStyle(
+                                  color: Colors.white, // Warna teks juga putih
+                                  fontSize: 16,
+                                ),
+                              ),
                             ),
+
                           ],
                         ),
                       ],
