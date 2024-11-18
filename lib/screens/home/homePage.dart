@@ -1,6 +1,7 @@
 import 'package:bounce_tapper/bounce_tapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:umkmfirebase/models/cacatan.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/services/appServices.dart';
@@ -16,6 +17,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int? keuntungan=0;
+
+  Future<void> keuntunganBersih() async {
+    List<Cacatan> cacatanList = await AppServices.readAllCacatan(widget.user);
+
+    int totalPemasukan = 0;
+    int totalPengeluaran = 0;
+
+    for (var cacatan in cacatanList) {
+      if (cacatan.jenisCacatan == "pemasukan") {
+        totalPemasukan += cacatan.jumlah;
+      } else if (cacatan.jenisCacatan == "pengeluaran") {
+        totalPengeluaran += cacatan.jumlah;
+      }
+    }
+    keuntungan = totalPemasukan - totalPengeluaran;
+    setState(() {
+
+    });
+  }
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    keuntunganBersih();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,23 +79,38 @@ class _HomePageState extends State<HomePage> {
 
   Widget headerSection() {
     return Container(
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.only(left: 20, right: 20,top: 4, bottom: 4),
       decoration: BoxDecoration(
         color: Colors.teal[200], // Warna latar belakang header
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.business, color: Colors.white, size: 40.0),
-          SizedBox(width: 10),
-          Text(
-            widget.user.namaUMKM,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+          Icon(Icons.business, color: Colors.white, size: 50.0),
+          Container(height: 90, width: 2, color: Colors.white,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.user.namaUMKM,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                AppServices.formatRupiah(keuntungan!),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+
+            ],
           ),
         ],
       ),
@@ -150,28 +194,6 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Informasi Bisnis",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.teal[700],
-            ),
-          ),
-          SizedBox(height: 5),
-          Card(
-            color: Colors.deepPurple[100],
-            elevation: 4.0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                "Pastikan",
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
             "Pengingat",
             style: TextStyle(
               fontSize: 18,
@@ -188,6 +210,19 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(16.0),
               child: Text(
                 "Pastikan untuk memeriksa laporan keuangan dan stok barang hari ini.",
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Card(
+            color: Colors.orange[100],
+            elevation: 4.0,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                "Selalu melihat grafik keuangan setiap bulan.",
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
               ),
             ),
