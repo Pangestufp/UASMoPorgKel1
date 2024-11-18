@@ -117,21 +117,27 @@ class _KeuanganPageState extends State<KeuanganPage> {
           ? Center(child: CircularProgressIndicator(color: Colors.white))
           : data.every((value) => value == 0)
           ? Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.warning_amber_rounded,
-                size: 50, color: Colors.white),
-            SizedBox(height: 16),
-            Text(
-              'Tidak ada data untuk $title',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+        child: Card(
+          margin: EdgeInsets.only(bottom: 20, left: 20),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.warning_amber_rounded,
+                    size: 50, color: Colors.red),
+                SizedBox(height: 20),
+                Text(
+                  'Tidak ada data untuk $title',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       )
           : Card(
