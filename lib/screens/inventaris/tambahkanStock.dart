@@ -335,7 +335,7 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                               await _fetchBarangList();
                                               Navigator.pop(context);
                                             },
-                                            child: Text("Tambahkan Stock"),
+                                            child: Text("Tambahkan Stock",style: TextStyle(color: Colors.teal[700]),),
                                           ),
                                         ),
                                       ],
