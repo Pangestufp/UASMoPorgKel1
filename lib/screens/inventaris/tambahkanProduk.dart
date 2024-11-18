@@ -70,8 +70,10 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightGreen.shade50,
       appBar: AppBar(
-        title: Text("Daftar Barang"),
+        title: Text("Daftar Barang", style: const TextStyle(color: Colors.white),) ,
+        backgroundColor: Colors.teal[700],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -85,6 +87,8 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
+                fillColor: Colors.white, // Warna latar belakang putih
+                filled: true, // Mengaktifkan latar belakang
               ),
             ),
             SizedBox(height: 10),
@@ -266,6 +270,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                       );
                     },
                     child: Card(
+                      color: Colors.teal[100],
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -293,7 +298,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                     child: Icon(
                                       Icons.image_not_supported,
                                       size: 50,
-                                      color: Colors.grey,
+                                      color: Colors.red,
                                     ),
                                   );
                                 }
@@ -308,8 +313,9 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                 Text(
                                   barang.namaBarang,
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.teal[800],
                                   ),
                                 ),
                                 SizedBox(height: 4),
@@ -317,14 +323,14 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                   "Harga jual Rp ${barang.hargaJual}",
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey[700],
+                                      color: Colors.teal[800],
                                   ),
                                 ),
                                 Text(
                                   "Harga beli Rp ${barang.hargaBeli}",
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey[700],
+                                      color: Colors.teal[800]
                                   ),
                                 ),
                               ],
@@ -455,7 +461,8 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
             },
           );
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white,),
+        backgroundColor: Color(0xFF00A86B),
       ),
     );
   }
