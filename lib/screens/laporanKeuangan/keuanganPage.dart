@@ -112,6 +112,21 @@ class _KeuanganPageState extends State<KeuanganPage> {
     required String totalText,
     required Color color,
   }) {
+    // Find max value for dynamic interval calculation
+    final maxValue = data.reduce((curr, next) => curr > next ? curr : next);
+
+    // Calculate appropriate interval based on max value
+    double interval = 1000000; // default interval
+    if (maxValue > 10000000) {
+      interval = 40000000; // use 5M interval for values > 10M
+    }
+    if (maxValue > 50000000) {
+      interval = 80000000; // use 10M interval for values > 50M
+    }
+    if (maxValue > 100000000) {
+      interval = 200000000; // use 25M interval for values > 100M
+    }
+
     return Container(
       child: isLoading
           ? Center(child: CircularProgressIndicator(color: Colors.white))
@@ -169,20 +184,37 @@ class _KeuanganPageState extends State<KeuanganPage> {
               ),
               SizedBox(height: 24),
               SizedBox(
-                height: 200, // Tinggi grafik
+                height: 200,
                 child: LineChart(
                   LineChartData(
                     gridData: FlGridData(
                       show: true,
                       drawVerticalLine: true,
-                      horizontalInterval: 1000000,
+                      horizontalInterval: interval,
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey[300],
+                          strokeWidth: 1,
+                        );
+                      },
                     ),
                     titlesData: FlTitlesData(
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
-                          interval: 1000000,
+                          interval: interval,
+                          reservedSize: 42,
                           getTitlesWidget: (value, meta) {
+                            // Format dalam Miliar jika nilai > 1M
+                            if (value >= 1000000) {
+                              return Text(
+                                '${(value / 1000000).toStringAsFixed(1)}M',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 10,
+                                ),
+                              );
+                            }
                             return Text(
                               currencyFormatter.format(value),
                               style: TextStyle(
