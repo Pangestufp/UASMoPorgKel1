@@ -65,12 +65,4 @@ class AuthService{
     return _auth.authStateChanges().map(_firebaseUser);
   }
 
-  Future<void> updateUserData(String uid, String namaUMKM, String alamatUMKM) async {
-    await FirebaseFirestore.instance.collection('users').doc(uid).update({
-      'namaUMKM': namaUMKM,
-      'alamatUMKM': alamatUMKM,
-    });
-  }
-
-
 }

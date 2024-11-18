@@ -32,6 +32,17 @@ class AppServices {
     }
   }
 
+  static Future<void> updateUser(UserModel user) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .update({
+      'uid': user.uid,
+      'namaUMKM': user.namaUMKM,
+      'alamatUMKM': user.alamatUMKM,
+    });
+
+  }
 
   //CRUD Barang
   static Future<void> createBarang(Barang barang) async {

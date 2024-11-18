@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/screens/wrapper.dart';
 import 'package:umkmfirebase/services/appServices.dart';
-import 'package:umkmfirebase/services/auth.dart';
 
 class Pengaturan extends StatefulWidget {
   final UserModel user;
@@ -38,96 +35,96 @@ class _PengaturanState extends State<Pengaturan> {
         ),
         backgroundColor: Colors.teal[700],
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                labelText: "Nama UMKM",
-                labelStyle: TextStyle(color: Colors.teal[700]),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 1.0,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  labelText: "Nama UMKM",
+                  labelStyle: TextStyle(color: Colors.teal[700]),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
                   ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.teal,
-                    width: 2.0,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
                   ),
-                ),
-                errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.red,
-                    width: 1.0,
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0,
+                    ),
                   ),
-                ),
-                focusedErrorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.teal,
-                    width: 2.0,
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  )),
+              controller: _namaUMKMController,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  labelText: "Alamat UMKM",
+                  labelStyle: TextStyle(color: Colors.teal[700]),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
                   ),
-                )),
-            controller: _namaUMKMController,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                labelText: "Alamat UMKM",
-                labelStyle: TextStyle(color: Colors.teal[700]),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 1.0,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
                   ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.teal,
-                    width: 2.0,
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0,
+                    ),
                   ),
-                ),
-                errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.red,
-                    width: 1.0,
-                  ),
-                ),
-                focusedErrorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.teal,
-                    width: 2.0,
-                  ),
-                )),
-            controller: _alamatUMKMController,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-              child: ElevatedButton(
-                  onPressed: () async {
-                    final user = Provider.of<FirebaseUser?>(context, listen: false);
-                    if (user != null) {
-                      await AuthService().updateUserData(
-                        user.uid!,
-                        _namaUMKMController.text,
-                        _alamatUMKMController.text,
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  )),
+              controller: _alamatUMKMController,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      AppServices.updateUser(UserModel(uid: widget.user.uid, namaUMKM: _namaUMKMController.text, alamatUMKM: _alamatUMKMController.text));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Wrapper()),
+                            (route) => false,
                       );
-                    }
-                  },
-                  child: Text(
-                    "Ubah",
-                    style: TextStyle(color: Colors.teal[700]),
-                  )
-              )
-          )
-        ],
+
+                    },
+                    child: Text(
+                      "Ubah",
+                      style: TextStyle(color: Colors.teal[700]),
+                    )))
+          ],
+        ),
       ),
     );
   }
