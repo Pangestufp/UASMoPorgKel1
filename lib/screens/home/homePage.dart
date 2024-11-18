@@ -4,6 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:umkmfirebase/models/cacatan.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
+import 'package:umkmfirebase/screens/invoice/invoicePage.dart';
+import 'package:umkmfirebase/screens/pengingat/pengingatPage.dart';
 import 'package:umkmfirebase/services/appServices.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12, // Background color yang lebih terang
+      backgroundColor: Colors.lightGreen.shade50, // Background color yang lebih terang
 
       body: Padding(
         padding: EdgeInsets.only(top: 16),
@@ -100,14 +102,19 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                AppServices.formatRupiah(keuntungan!),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Row(
+                children: [
+                  Text(
+                    AppServices.formatRupiah(keuntungan!),
+                    style: TextStyle(
+                      color: keuntungan!>0?Colors.limeAccent:Colors.red,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Icon(keuntungan!>0?Icons.keyboard_double_arrow_up:Icons.keyboard_double_arrow_down, color: keuntungan!>0?Colors.limeAccent:Colors.red,size: 20,)
+                ],
+              )
 
 
             ],
@@ -137,8 +144,66 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               menuItem("Keuangan", "assets/icons/report.png", 4),
-              menuItem("Invoice", "assets/icons/tersimpan.png", 5),
-              menuItem("Pengingat", "assets/icons/pengingat.png", 6),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>InvoicePage(user: widget.user)));
+                },
+                child: BounceTapper(
+                  child: Card(
+                    color: Colors.teal[400],
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset("assets/icons/tersimpan.png", scale: 10),
+                            Text(
+                              "Invoice",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).animate().scale(),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>PengingatPage(user: widget.user)));
+                },
+                child: BounceTapper(
+                  child: Card(
+                    color: Colors.teal[400],
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset("assets/icons/pengingat.png", scale: 10),
+                            Text(
+                              "Pengingat",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).animate().scale(),
+                ),
+              )
             ],
           ),
         ],
