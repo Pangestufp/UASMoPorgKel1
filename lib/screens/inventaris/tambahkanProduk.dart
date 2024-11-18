@@ -241,7 +241,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                                   hargaBeli: int.parse(
                                                       _hargaBeliController
                                                           .text),
-                                                  jumlahStock: 0));
+                                                  jumlahStock: barang.jumlahStock));
 
                                               setState(() {
                                                 _image = null;
