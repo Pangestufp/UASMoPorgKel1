@@ -15,9 +15,7 @@ class _InventarisPageState extends State<InventarisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Inventaris"),
-      ),
+      backgroundColor: Colors.lightGreen.shade50,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -53,6 +51,7 @@ class _InventarisPageState extends State<InventarisPage> {
 
   Widget _buildCard(String title, IconData icon, VoidCallback onTap) {
     return GestureDetector(
+
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -64,7 +63,7 @@ class _InventarisPageState extends State<InventarisPage> {
           height: 120,
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: Colors.teal[400],
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: Column(

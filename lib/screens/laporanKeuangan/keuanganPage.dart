@@ -88,7 +88,8 @@ class _KeuanganPageState extends State<KeuanganPage> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 2, right: 40, top: 4, bottom: 4),
+              margin: EdgeInsets.only(left: 8, right: 8, top: 20),
+              padding: EdgeInsets.only(left: 15, right: 10, top: 4, bottom: 4),
               decoration: BoxDecoration(
                 color: Colors.teal[700],
                 borderRadius: BorderRadius.circular(12.0),
@@ -96,16 +97,29 @@ class _KeuanganPageState extends State<KeuanganPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    "Laporan keuangan usaha " +
-                        widget.user.namaUMKM +
-                        " Tahun${currentYear}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Icon(Icons.area_chart, color: Colors.white,size: 40,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Laporan Tahun ${currentYear}",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                            widget.user.namaUMKM ,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(width: 5,),
                   Container(
                     height: 90,
                     width: 2,
@@ -126,7 +140,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                     Icon(
                                       Icons.assessment_rounded,
                                       size: 40,
-                                      color: Colors.amber,
+                                      color: Colors.teal[700]
                                     ),
                                     SizedBox(height: 8),
                                     Text(
@@ -356,11 +370,11 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    icon: Icon(Icons.check_circle, color: Colors.amber),
+                                    icon: Icon(Icons.check_circle, color: Colors.teal[700]),
                                     label: Text(
                                       "Selesai",
                                       style: TextStyle(
-                                        color: Colors.amber,
+                                        color: Colors.teal[700],
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -371,7 +385,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
                       },
                       icon: Icon(
                         Icons.open_in_new,
-                        color: Colors.teal[700],
+                        color: Colors.white,
                       ))
                 ],
               ),

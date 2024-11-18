@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                 widget.user.namaUMKM,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),

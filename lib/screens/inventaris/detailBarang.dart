@@ -15,43 +15,67 @@ class _DetailbarangState extends State<Detailbarang> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.lightGreen.shade50,
       appBar: AppBar(
         title: Text(
           widget.benda.namaBarang,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: widget.benda.urlFotoBarang.isNotEmpty
-                  ? FutureBuilder<bool>(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.green.shade100,
+                            Colors.green.shade300,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                    ),
+                    widget.benda.urlFotoBarang.isNotEmpty
+                        ? FutureBuilder<bool>(
                       future: File(widget.benda.urlFotoBarang).exists(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         }
 
                         if (snapshot.hasData && snapshot.data == true) {
-                          return Image.file(
-                            File(widget.benda.urlFotoBarang),
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.cover,
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.file(
+                              File(widget.benda.urlFotoBarang),
+                              width: 200,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
                           );
                         } else {
                           return Container(
                             width: 200,
                             height: 200,
-                            color: Colors.grey,
-                            child: Icon(
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: const Icon(
                               Icons.image_not_supported,
                               color: Colors.white,
                               size: 100,
@@ -60,51 +84,91 @@ class _DetailbarangState extends State<Detailbarang> {
                         }
                       },
                     )
-                  : Container(
+                        : Container(
                       width: 200,
                       height: 200,
-                      color: Colors.grey,
-                      child: Icon(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Icon(
                         Icons.image_not_supported,
                         color: Colors.white,
                         size: 100,
                       ),
                     ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              widget.benda.namaBarang,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              widget.benda.deskripsiBarang,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
+              const SizedBox(height: 16),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.benda.namaBarang,
+                        style: TextStyle(
+                          color: Colors.teal[700],
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Deskripsi: ${widget.benda.deskripsiBarang}",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Harga Beli: Rp${widget.benda.hargaBeli}',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Harga Jual: Rp${widget.benda.hargaJual}',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Harga Beli: Rp${widget.benda.hargaBeli}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
+              const SizedBox(height: 24),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 16),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Kembali",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Harga Jual: Rp${widget.benda.hargaJual}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
