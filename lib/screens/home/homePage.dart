@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               menuItem("Penjualan", "assets/icons/cart.png", 3),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 5),
           // Second Row of Menu
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
         child: Card(
           color: Colors.teal[400], // Warna Card untuk menu
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(8.0),
             child: Container(
               height: 80,
               width: 80,
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
   Widget infoAndReminderSection() {
     return Container(
       alignment: Alignment.bottomCenter,
-      margin: EdgeInsets.only(top: 30.0),
+      margin: EdgeInsets.only(top: 10.0),
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.teal[700],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           Card(
             color: Colors.deepPurple[100],
             elevation: 4.0,
@@ -165,12 +165,12 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                "Perbarui informasi bisnis untuk melanjutkan proses pencatatan dan keuangan secara otomatis.",
+                "Pastikan",
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           Text(
             "Pengingat",
             style: TextStyle(
