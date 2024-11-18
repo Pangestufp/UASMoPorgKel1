@@ -324,12 +324,27 @@ class _TambahkanStockState extends State<TambahkanStock> {
                     ),
                   ),
                   leading: barang.urlFotoBarang.isNotEmpty
-                      ? Image.file(
-                          File(barang.urlFotoBarang),
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
-                        )
+                      ? FutureBuilder<bool>(
+                    future: File(barang.urlFotoBarang).exists(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+
+                      if (snapshot.hasData && snapshot.data == true) {
+                        return Image.file(
+                          File(barang.urlFotoBarang),fit: BoxFit.cover,width: 50,
+                        );
+                      } else {
+                        return Icon(
+                          Icons.image_not_supported,
+                          size: 50,
+                          color: Colors.grey,
+                        );
+                      }
+                    },
+                  )
                       : Icon(Icons.image, size: 50),
                 );
               },

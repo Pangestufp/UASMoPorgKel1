@@ -28,4 +28,12 @@ class Transaksi {
       total: data['total'],
     );
   }
+
+  factory Transaksi.fromMap(Map<String, dynamic> data) {
+    return Transaksi(
+      idTransaksi: data['idTransaksi'],
+      barang: Barang.fromMap(data['barang'] as Map<String, dynamic>),
+      total: data['total'] ?? 0,
+    );
+  }
 }
