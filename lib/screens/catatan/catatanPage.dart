@@ -30,6 +30,21 @@ class _CatatanPageState extends State<CatatanPage> {
       initialDate: _initialDate,
       firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime.now().add(Duration(days: 365)),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+              primaryColor: Colors.teal[700],
+              hintColor: Colors.green,
+              colorScheme: ColorScheme.light(
+                primary: Colors.teal,
+                onPrimary: Colors.white,
+                surface: Colors.white,
+              ),
+              dialogBackgroundColor: Colors.white
+          ),
+          child: child!,
+        );
+      },
     );
     if (_pickedDate != null) {
       selectedDate = DateTime(
@@ -233,7 +248,7 @@ class _CatatanPageState extends State<CatatanPage> {
                               : Colors.green,
                           fontWeight: FontWeight.bold,
                         )),
-                    subtitle: Text(catatan.jenisCatatan),
+                    subtitle: Text(catatan.isiCatatan),
                     trailing: Text(
                       AppServices.formatRupiah(catatan.jumlah),
                       style: TextStyle(
@@ -284,6 +299,7 @@ class _CatatanPageState extends State<CatatanPage> {
                       Form(
                           autovalidateMode: AutovalidateMode.always,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Center(
                                   child: Text(
@@ -429,34 +445,36 @@ class _CatatanPageState extends State<CatatanPage> {
                                     ),
                                 controller: _jumlahController,
                               ),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  AppServices.createCatatan(Catatan(
-                                      idUser: widget.user.uid,
-                                      jenisCatatan: pengeluaran == true
-                                          ? "pengeluaran"
-                                          : "pemasukan",
-                                      tanggal: _selectedDate.toString(),
-                                      isiCatatan: _isiCatatanController.text,
-                                      jumlah:
-                                          int.parse(_jumlahController.text)));
-                                  setState(() {
-                                    _jumlahController.clear();
-                                    _isiCatatanController.clear();
-                                  });
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    AppServices.createCatatan(Catatan(
+                                        idUser: widget.user.uid,
+                                        jenisCatatan: pengeluaran == true
+                                            ? "pengeluaran"
+                                            : "pemasukan",
+                                        tanggal: _selectedDate.toString(),
+                                        isiCatatan: _isiCatatanController.text,
+                                        jumlah:
+                                            int.parse(_jumlahController.text)));
+                                    setState(() {
+                                      _jumlahController.clear();
+                                      _isiCatatanController.clear();
+                                    });
 
-                                  setModalState(() {
-                                    _selectedDate = DateTime.now();
-                                  });
-                                  await _fetchCatatanList();
-                                  await keuntunganBersih();
-                                  Navigator.pop(context);
-                                  setState(() {});
-                                },
-                                child: Text(
-                                  "Tambahkan",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black),
+                                    setModalState(() {
+                                      _selectedDate = DateTime.now();
+                                    });
+                                    await _fetchCatatanList();
+                                    await keuntunganBersih();
+                                    Navigator.pop(context);
+                                    setState(() {});
+                                  },
+                                  child: Text(
+                                    "Tambahkan",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.teal),
+                                  ),
                                 ),
                               ),
                             ],

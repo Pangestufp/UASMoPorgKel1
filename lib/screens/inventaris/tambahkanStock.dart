@@ -30,6 +30,21 @@ class _TambahkanStockState extends State<TambahkanStock> {
       initialDate: _initialDate,
       firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime.now().add(Duration(days: 365)),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Colors.teal[700],
+            hintColor: Colors.green,
+            colorScheme: ColorScheme.light(
+              primary: Colors.teal,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+            ),
+            dialogBackgroundColor: Colors.white
+          ),
+          child: child!,
+        );
+      },
     );
     if (_pickedDate != null) {
       selectedDate = DateTime(
@@ -79,7 +94,11 @@ class _TambahkanStockState extends State<TambahkanStock> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambahkan Stock'),
+        backgroundColor: Colors.teal[700],
+        title: Text('Tambahkan Stock',style: TextStyle(color: Colors.white),),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Column(
         children: [
@@ -89,15 +108,56 @@ class _TambahkanStockState extends State<TambahkanStock> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: 'Cari Barang',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: Icon(Icons.search,color: Colors.teal,),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(
+                    color: Colors.teal,
+                    width: 2.0,
+                  ),
                 ),
+
+                  labelStyle: TextStyle(color: Colors.teal[700]),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  )
+
               ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
+              separatorBuilder: (context, index){
+                return Divider(
+                  color: Colors.teal[700],
+                  height: 2,
+                );
+              },
               itemCount: _filteredBarangList.length,
               itemBuilder: (context, index) {
                 final barang = _filteredBarangList[index];
@@ -124,14 +184,16 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                 Form(
                                     autovalidateMode: AutovalidateMode.always,
                                     child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("Status Pembayaran : "),
+                                        Text("Status Pembayaran : ",style: TextStyle(color: Colors.teal),),
                                         Row(
                                           children: [
                                             Row(
                                               children: [
                                                 Radio<bool>(
                                                   value: true,
+                                                  activeColor: Colors.teal[700],
                                                   groupValue: isPaid,
                                                   onChanged: (value) {
                                                     setModalState(() {
@@ -146,6 +208,7 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                               children: [
                                                 Radio<bool>(
                                                   value: false,
+                                                  activeColor: Colors.teal[700],
                                                   groupValue: isPaid,
                                                   onChanged: (value) {
                                                     setModalState(() {
@@ -208,44 +271,72 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                         TextFormField(
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                              labelText: "Jumlah Barang"),
+                                              labelText: "Jumlah Barang",
+                                              labelStyle: TextStyle(color: Colors.teal[700]),
+                                              enabledBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                              focusedBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.teal,
+                                                  width: 2.0,
+                                                ),
+                                              ),
+                                              errorBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.red,
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                              focusedErrorBorder: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.teal,
+                                                  width: 2.0,
+                                                ),
+                                              )
+                                          ),
                                           controller: _stockController,
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            AppServices.updateBarang(Barang(
-                                                idBarang: barang.idBarang,
-                                                idUser: widget.user.uid,
-                                                namaBarang: barang.namaBarang,
-                                                deskripsiBarang:
-                                                    barang.deskripsiBarang,
-                                                urlFotoBarang:
-                                                    barang.urlFotoBarang,
-                                                hargaJual: barang.hargaJual,
-                                                hargaBeli: barang.hargaBeli,
-                                                jumlahStock: barang
-                                                        .jumlahStock +
-                                                    int.parse(_stockController
-                                                        .text)));
-
-                                            if (isPaid == false) {
-                                              AppServices.createPengingat(Pengingat(
+                                        Center(
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              AppServices.updateBarang(Barang(
+                                                  idBarang: barang.idBarang,
                                                   idUser: widget.user.uid,
-                                                  tanggal:
-                                                      _selectedDate.toString(),
-                                                  isi:
-                                                      "Item(${barang.namaBarang}) sejumlah ${int.parse(_stockController.text)} belum lunas"));
-                                            }
-                                            setState(() {
-                                              _stockController.clear();
-                                            });
-                                            setModalState(() {
-                                              _selectedDate = DateTime.now();
-                                            });
-                                            await _fetchBarangList();
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Tambahkan Stock"),
+                                                  namaBarang: barang.namaBarang,
+                                                  deskripsiBarang:
+                                                      barang.deskripsiBarang,
+                                                  urlFotoBarang:
+                                                      barang.urlFotoBarang,
+                                                  hargaJual: barang.hargaJual,
+                                                  hargaBeli: barang.hargaBeli,
+                                                  jumlahStock: barang
+                                                          .jumlahStock +
+                                                      int.parse(_stockController
+                                                          .text)));
+
+                                              if (isPaid == false) {
+                                                AppServices.createPengingat(Pengingat(
+                                                    idUser: widget.user.uid,
+                                                    tanggal:
+                                                        _selectedDate.toString(),
+                                                    isi:
+                                                        "Item(${barang.namaBarang}) sejumlah ${int.parse(_stockController.text)} belum lunas"));
+                                              }
+                                              setState(() {
+                                                _stockController.clear();
+                                              });
+                                              setModalState(() {
+                                                _selectedDate = DateTime.now();
+                                              });
+                                              await _fetchBarangList();
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("Tambahkan Stock"),
+                                          ),
                                         ),
                                       ],
                                     ))
@@ -279,8 +370,36 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                     children: [
                                       TextFormField(
                                         decoration: InputDecoration(
-                                            labelText: "Jumlah Barang"),
+                                            labelText: "Jumlah Barang",
+                                            labelStyle: TextStyle(color: Colors.teal[700]),
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.grey,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.teal,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.red,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            focusedErrorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.teal,
+                                                width: 2.0,
+                                              ),
+                                            )
+
+                                        ),
                                         controller: _stockController,
+                                        keyboardType: TextInputType.number,
                                       ),
                                       ElevatedButton(
                                         onPressed: () async {
@@ -303,7 +422,7 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                           await _fetchBarangList();
                                           Navigator.pop(context);
                                         },
-                                        child: Text("Edit Stock"),
+                                        child: Text("Edit Stock",style: TextStyle(color: Colors.teal[700]),),
                                       ),
                                     ],
                                   ))
@@ -321,6 +440,7 @@ class _TambahkanStockState extends State<TambahkanStock> {
                       color:
                           barang.jumlahStock == 0 ? Colors.red : Colors.black,
                       fontWeight: FontWeight.bold,
+                      fontSize: 16
                     ),
                   ),
                   leading: barang.urlFotoBarang.isNotEmpty

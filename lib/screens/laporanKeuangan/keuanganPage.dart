@@ -449,10 +449,10 @@ class _KeuanganPageState extends State<KeuanganPage> {
                               size: 50, color: Colors.red),
                           SizedBox(height: 20),
                           Text(
-                            'Tidak ada data untuk $title',
+                            'Tidak ada data pada $title',
                             style: TextStyle(
                               color: Colors.red,
-                              fontSize: 16,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
