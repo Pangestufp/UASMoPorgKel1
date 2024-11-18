@@ -141,7 +141,7 @@ class _InvoicePageState extends State<InvoicePage> {
                   ),
                 );
               },
-              icon: Icon(Icons.open_in_new, color: Colors.blue),
+              icon: Icon(Icons.open_in_new, color: Colors.teal[700]),
             ),
             leading: Container(
               child: Column(
@@ -152,13 +152,13 @@ class _InvoicePageState extends State<InvoicePage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
-                      color: Colors.blue,
+                      color: Colors.teal[700],
                     ),
                   ),
                   Text(
                     DateFormat.MMM().format(DateTime.parse(invoice.waktu)),
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.teal[700],
                     ),
                   ),
                 ],
@@ -174,7 +174,9 @@ class _InvoicePageState extends State<InvoicePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Invoice"),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text("Invoice",style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.teal[700],
         actions: [
           if (_isLoading)
             Center(
@@ -200,10 +202,44 @@ class _InvoicePageState extends State<InvoicePage> {
                 controller: _searchController,
                 decoration: InputDecoration(
                   labelText: "Cari Pembeli",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
+                    prefixIcon: Icon(Icons.search,color: Colors.teal,),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.teal,
+                        width: 2.0,
+                      ),
+                    ),
+
+                    labelStyle: TextStyle(color: Colors.teal[700]),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.teal,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.teal,
+                        width: 2.0,
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                        color: Colors.teal,
+                        width: 2.0,
+                      ),
+                    )
                 ),
               ),
             ),

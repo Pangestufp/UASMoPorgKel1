@@ -21,7 +21,7 @@ class _DetailbarangState extends State<Detailbarang> {
           widget.benda.namaBarang,
           style: const TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.teal[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
