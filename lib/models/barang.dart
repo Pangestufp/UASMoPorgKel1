@@ -47,4 +47,19 @@ class Barang {
       jumlahStock: data['jumlahStock'],
     );
   }
+
+  factory Barang.fromMap(Map<String, dynamic> data) {
+    return Barang(
+      idBarang: data['idBarang'],
+      idUser: data['idUser'],
+      namaBarang: data['namaBarang'],
+      deskripsiBarang: data['deskripsiBarang'],
+      urlFotoBarang: data['urlFotoBarang'],
+      hargaJual: data['hargaJual'],
+      hargaBeli: data['hargaBeli'],
+      jumlahStock: data['jumlahStock'],
+    );
+  }
+
+
 }

@@ -3,7 +3,8 @@ import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:umkmfirebase/models/pengingat.dart';
 import 'package:umkmfirebase/models/userModel.dart';
-import 'package:umkmfirebase/pengaturan/pengaturan.dart';
+import 'package:umkmfirebase/screens/invoice/invoicePage.dart';
+import 'package:umkmfirebase/screens/pengaturan/pengaturan.dart';
 import 'package:umkmfirebase/screens/cacatan/cacatanPage.dart';
 import 'package:umkmfirebase/screens/home/homePage.dart';
 import 'package:umkmfirebase/screens/inventaris/inventarisPage.dart';
@@ -232,8 +233,8 @@ class _BottomNavState extends State<BottomNav> {
                               title: Text("Invoice"),
                               onTap: () {
                                 Navigator.pop(context);
-                                // Navigator.push(context,
-                                //     MaterialPageRoute(builder: (context) => Invoice()));
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => InvoicePage(user: user!)));
                               },
                             ),
                             Divider(color: Colors.amber,),

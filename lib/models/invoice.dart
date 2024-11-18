@@ -32,7 +32,7 @@ class Invoice {
   }
 
   factory Invoice.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Invoice(
       idInvoice: doc.id,
       idUser: data['idUser'],
@@ -40,7 +40,9 @@ class Invoice {
       alamat: data['alamat'],
       waktu: data['waktu'],
       urlInvoice: data['urlInvoice'],
-      transaksiList: (data['transaksiList'] as List).map((item) => Transaksi.fromFirestore(item)).toList(),
+      transaksiList: ((data['transaksiList'] ?? []) as List)
+          .map((item) => Transaksi.fromMap(item as Map<String, dynamic>))
+          .toList(),
     );
   }
 }

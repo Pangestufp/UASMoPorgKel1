@@ -112,7 +112,7 @@ class _CacatanPageState extends State<CacatanPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("keuntungan",style: TextStyle(color: Colors.white),),
-                    Text("${keuntungan}", style: TextStyle(color: keuntungan!>0?Colors.green:Colors.red),)
+                    Text(AppServices.formatRupiah(keuntungan??0), style: TextStyle(color: keuntungan!>0?Colors.green:Colors.red),)
                   ],
                 ),
               ),
