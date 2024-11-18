@@ -107,7 +107,7 @@ class _BottomNavState extends State<BottomNav> {
                       color: Colors.white),
                 ),
               ),
-              backgroundColor: Colors.black,
+              backgroundColor: Color(0xFF00A86B),
             ),
             body: SafeArea(
                 child: Padding(
@@ -117,7 +117,7 @@ class _BottomNavState extends State<BottomNav> {
             bottomNavigationBar: CurvedNavigationBar(
               index: _currentIndex,
               height: 50,
-              color: Colors.black,
+              color: Color(0xFF00A86B),
               backgroundColor: Colors.white,
               animationDuration: Duration(milliseconds: 500),
               items: [
