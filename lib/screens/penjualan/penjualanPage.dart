@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:umkmfirebase/models/barang.dart';
-import 'package:umkmfirebase/models/cacatan.dart';
+import 'package:umkmfirebase/models/catatan.dart';
 import 'package:umkmfirebase/models/invoice.dart';
 import 'package:umkmfirebase/models/transaksi.dart';
 import 'package:umkmfirebase/models/userModel.dart';
@@ -236,8 +236,8 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                 onPressed: () async {
                                   await updateStock();
 
-                                  AppServices.createCacatan(
-                                      Cacatan(idUser: widget.user.uid, jenisCacatan: "pemasukan", tanggal: DateTime.now().toString(), isiCacatan: "Penjualan Item atas nama ${_namaController.text}", jumlah: hitungKeuntungan())
+                                  AppServices.createCatatan(
+                                      Catatan(idUser: widget.user.uid, jenisCatatan: "pemasukan", tanggal: DateTime.now().toString(), isiCatatan: "Penjualan Item atas nama ${_namaController.text}", jumlah: hitungKeuntungan())
                                   );
                                   
                                   String? pdf =

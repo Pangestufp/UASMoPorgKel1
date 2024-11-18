@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:umkmfirebase/models/cacatan.dart';
+import 'package:umkmfirebase/models/catatan.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/services/appServices.dart';
@@ -14,7 +14,7 @@ class KeuanganPage extends StatefulWidget {
 }
 
 class _KeuanganPageState extends State<KeuanganPage> {
-  List<Cacatan> _cacatanList = [];
+  List<Catatan> _catatanList = [];
   List<double> penjualan = List<double>.filled(12, 0);
   List<double> pengeluaran = List<double>.filled(12, 0);
   bool isLoading = true;
@@ -33,7 +33,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
 
   Future<void> loadData() async {
     try {
-      await _fetchCacatanList();
+      await _fetchCatatanList();
       hitungTotalPerBulan();
       setState(() {
         isLoading = false;
@@ -46,8 +46,8 @@ class _KeuanganPageState extends State<KeuanganPage> {
     }
   }
 
-  Future<void> _fetchCacatanList() async {
-    _cacatanList = await AppServices.readAllCacatan(widget.user);
+  Future<void> _fetchCatatanList() async {
+    _catatanList = await AppServices.readAllCatatan(widget.user);
     setState(() {});
   }
 
@@ -55,14 +55,14 @@ class _KeuanganPageState extends State<KeuanganPage> {
     List<double> totalPemasukanPerBulan = List<double>.filled(12, 0);
     List<double> totalPengeluaranPerBulan = List<double>.filled(12, 0);
 
-    for (var cacatan in _cacatanList) {
-      DateTime tanggal = DateTime.parse(cacatan.tanggal);
+    for (var catatan in _catatanList) {
+      DateTime tanggal = DateTime.parse(catatan.tanggal);
       if (tanggal.year == currentYear) {
         int bulan = tanggal.month - 1;
-        if (cacatan.jenisCacatan == "pemasukan") {
-          totalPemasukanPerBulan[bulan] += cacatan.jumlah;
-        } else if (cacatan.jenisCacatan == "pengeluaran") {
-          totalPengeluaranPerBulan[bulan] += cacatan.jumlah;
+        if (catatan.jenisCatatan == "pemasukan") {
+          totalPemasukanPerBulan[bulan] += catatan.jumlah;
+        } else if (catatan.jenisCatatan == "pengeluaran") {
+          totalPengeluaranPerBulan[bulan] += catatan.jumlah;
         }
       }
     }

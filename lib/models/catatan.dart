@@ -1,40 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Cacatan {
-  String? idCacatan;
+class Catatan {
+  String? idCatatan;
   String idUser;
-  String jenisCacatan;
+  String jenisCatatan;
   String tanggal;
-  String isiCacatan;
+  String isiCatatan;
   int jumlah;
 
-  Cacatan({
-    this.idCacatan,
+  Catatan({
+    this.idCatatan,
     required this.idUser,
-    required this.jenisCacatan,
+    required this.jenisCatatan,
     required this.tanggal,
-    required this.isiCacatan,
+    required this.isiCatatan,
     required this.jumlah,
   });
 
   Map<String, dynamic> toFirestore() {
     return {
       'idUser': idUser,
-      'jenisCacatan': jenisCacatan,
+      'jenisCatatan': jenisCatatan,
       'tanggal': tanggal,
-      'isiCacatan': isiCacatan,
+      'isiCatatan': isiCatatan,
       'jumlah': jumlah,
     };
   }
 
-  factory Cacatan.fromFirestore(DocumentSnapshot doc) {
+  factory Catatan.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
-    return Cacatan(
-      idCacatan: doc.id,
+    return Catatan(
+      idCatatan: doc.id,
       idUser: data['idUser'],
-      jenisCacatan: data['jenisCacatan'],
+      jenisCatatan: data['jenisCatatan'],
       tanggal: data['tanggal'],
-      isiCacatan: data['isiCacatan'],
+      isiCatatan: data['isiCatatan'],
       jumlah: data['jumlah'],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:bounce_tapper/bounce_tapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:umkmfirebase/models/cacatan.dart';
+import 'package:umkmfirebase/models/catatan.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/screens/invoice/invoicePage.dart';
@@ -22,16 +22,16 @@ class _HomePageState extends State<HomePage> {
   int? keuntungan=0;
 
   Future<void> keuntunganBersih() async {
-    List<Cacatan> cacatanList = await AppServices.readAllCacatan(widget.user);
+    List<Catatan> catatanList = await AppServices.readAllCatatan(widget.user);
 
     int totalPemasukan = 0;
     int totalPengeluaran = 0;
 
-    for (var cacatan in cacatanList) {
-      if (cacatan.jenisCacatan == "pemasukan") {
-        totalPemasukan += cacatan.jumlah;
-      } else if (cacatan.jenisCacatan == "pengeluaran") {
-        totalPengeluaran += cacatan.jumlah;
+    for (var catatan in catatanList) {
+      if (catatan.jenisCatatan == "pemasukan") {
+        totalPemasukan += catatan.jumlah;
+      } else if (catatan.jenisCatatan == "pengeluaran") {
+        totalPengeluaran += catatan.jumlah;
       }
     }
     keuntungan = totalPemasukan - totalPengeluaran;
@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               menuItem("Inventaris", "assets/icons/inventory.png", 1),
-              menuItem("Cacatan", "assets/icons/note.png", 2),
+              menuItem("Catatan", "assets/icons/note.png", 2),
               menuItem("Penjualan", "assets/icons/cart.png", 3),
             ],
           ),

@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:umkmfirebase/models/barang.dart';
-import 'package:umkmfirebase/models/cacatan.dart';
+import 'package:umkmfirebase/models/catatan.dart';
 import 'package:umkmfirebase/models/invoice.dart';
 import 'package:umkmfirebase/models/pengingat.dart';
 import 'package:umkmfirebase/models/transaksi.dart';
@@ -119,45 +119,45 @@ class AppServices {
         .delete();
   }
 
-  //CRUD Cacatan
-  static Future<void> createCacatan(Cacatan cacatan) async {
-    CollectionReference cacatanRef =
-        FirebaseFirestore.instance.collection('cacatan');
-    await cacatanRef.add(cacatan.toFirestore());
+  //CRUD Catatan
+  static Future<void> createCatatan(Catatan catatan) async {
+    CollectionReference catatanRef =
+        FirebaseFirestore.instance.collection('catatan');
+    await catatanRef.add(catatan.toFirestore());
   }
 
-  static Future<List<Cacatan>> readAllCacatan(UserModel user) async {
-    QuerySnapshot cacatanSnapshot = await FirebaseFirestore.instance
-        .collection('cacatan')
+  static Future<List<Catatan>> readAllCatatan(UserModel user) async {
+    QuerySnapshot catatanSnapshot = await FirebaseFirestore.instance
+        .collection('catatan')
         .where('idUser', isEqualTo: user.uid)
         .get();
 
-    List<Cacatan> cacatanList = cacatanSnapshot.docs.map((doc) {
-      return Cacatan.fromFirestore(doc);
+    List<Catatan> catatanList = catatanSnapshot.docs.map((doc) {
+      return Catatan.fromFirestore(doc);
     }).toList();
 
-    cacatanList.sort((comp1, comp2) => comp2.tanggal.compareTo(comp1.tanggal));
+    catatanList.sort((comp1, comp2) => comp2.tanggal.compareTo(comp1.tanggal));
 
-    return cacatanList;
+    return catatanList;
   }
 
-  static Future<void> updateCacatan(Cacatan cacatan) async {
+  static Future<void> updateCatatan(Catatan catatan) async {
     await FirebaseFirestore.instance
-        .collection('cacatan')
-        .doc(cacatan.idCacatan)
+        .collection('catatan')
+        .doc(catatan.idCatatan)
         .update({
-      'idUser': cacatan.idUser,
-      'jenisCacatan': cacatan.jenisCacatan,
-      'tanggal': cacatan.tanggal,
-      'isiCacatan': cacatan.isiCacatan,
-      'jumlah': cacatan.jumlah,
+      'idUser': catatan.idUser,
+      'jenisCatatan': catatan.jenisCatatan,
+      'tanggal': catatan.tanggal,
+      'isiCatatan': catatan.isiCatatan,
+      'jumlah': catatan.jumlah,
     });
   }
 
-  static Future<void> deleteCacatan(Cacatan cacatan) async {
+  static Future<void> deleteCatatan(Catatan catatan) async {
     await FirebaseFirestore.instance
-        .collection('cacatan')
-        .doc(cacatan.idCacatan)
+        .collection('catatan')
+        .doc(catatan.idCatatan)
         .delete();
   }
 

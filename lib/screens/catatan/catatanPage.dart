@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:umkmfirebase/models/cacatan.dart';
+import 'package:umkmfirebase/models/catatan.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/services/appServices.dart';
 
-class CacatanPage extends StatefulWidget {
+class CatatanPage extends StatefulWidget {
   final UserModel user;
-  CacatanPage({super.key, required this.user});
+  CatatanPage({super.key, required this.user});
 
   @override
-  State<CacatanPage> createState() => _CacatanPageState();
+  State<CatatanPage> createState() => _CatatanPageState();
 }
 
-class _CacatanPageState extends State<CacatanPage> {
-  List<Cacatan> _cacatanList = [];
-  List<Cacatan> _filteredCacatanList = [];
+class _CatatanPageState extends State<CatatanPage> {
+  List<Catatan> _catatanList = [];
+  List<Catatan> _filteredCatatanList = [];
   bool pengeluaran = false;
   int? keuntungan = 0;
   final TextEditingController _searchController = TextEditingController();
-  final TextEditingController _isiCacatanController = TextEditingController();
+  final TextEditingController _isiCatatanController = TextEditingController();
   final TextEditingController _jumlahController = TextEditingController();
 
   DateTime? _selectedDate;
@@ -46,16 +46,16 @@ class _CacatanPageState extends State<CacatanPage> {
   }
 
   Future<void> keuntunganBersih() async {
-    List<Cacatan> cacatanList = await AppServices.readAllCacatan(widget.user);
+    List<Catatan> catatanList = await AppServices.readAllCatatan(widget.user);
 
     int totalPemasukan = 0;
     int totalPengeluaran = 0;
 
-    for (var cacatan in cacatanList) {
-      if (cacatan.jenisCacatan == "pemasukan") {
-        totalPemasukan += cacatan.jumlah;
-      } else if (cacatan.jenisCacatan == "pengeluaran") {
-        totalPengeluaran += cacatan.jumlah;
+    for (var catatan in catatanList) {
+      if (catatan.jenisCatatan == "pemasukan") {
+        totalPemasukan += catatan.jumlah;
+      } else if (catatan.jenisCatatan == "pengeluaran") {
+        totalPengeluaran += catatan.jumlah;
       }
     }
     keuntungan = totalPemasukan - totalPengeluaran;
@@ -66,22 +66,22 @@ class _CacatanPageState extends State<CacatanPage> {
     super.initState();
     keuntunganBersih();
     _selectedDate = DateTime.now();
-    _fetchCacatanList();
-    _searchController.addListener(_filterCacatanList);
+    _fetchCatatanList();
+    _searchController.addListener(_filterCatatanList);
   }
 
-  Future<void> _fetchCacatanList() async {
-    _cacatanList = await AppServices.readAllCacatan(widget.user);
+  Future<void> _fetchCatatanList() async {
+    _catatanList = await AppServices.readAllCatatan(widget.user);
     setState(() {
-      _filteredCacatanList = _cacatanList;
+      _filteredCatatanList = _catatanList;
     });
   }
 
-  void _filterCacatanList() {
+  void _filterCatatanList() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredCacatanList = _cacatanList.where((cacatan) {
-        return cacatan.isiCacatan.toLowerCase().contains(query);
+      _filteredCatatanList = _catatanList.where((catatan) {
+        return catatan.isiCatatan.toLowerCase().contains(query);
       }).toList();
     });
   }
@@ -219,25 +219,25 @@ class _CacatanPageState extends State<CacatanPage> {
                   color: Color(0xFF00A86B),
                 );
               },
-              itemCount: _filteredCacatanList.length,
+              itemCount: _filteredCatatanList.length,
               itemBuilder: (context, index) {
-                final cacatan = _filteredCacatanList[index];
+                final catatan = _filteredCatatanList[index];
                 return ListTile(
                     title: Text(
-                        cacatan.jenisCacatan == "pengeluaran"
+                        catatan.jenisCatatan == "pengeluaran"
                             ? "Pengeluaran"
                             : "Pemasukan",
                         style: TextStyle(
-                          color: cacatan.jenisCacatan == "pengeluaran"
+                          color: catatan.jenisCatatan == "pengeluaran"
                               ? Colors.red
                               : Colors.green,
                           fontWeight: FontWeight.bold,
                         )),
-                    subtitle: Text(cacatan.isiCacatan),
+                    subtitle: Text(catatan.jenisCatatan),
                     trailing: Text(
-                      AppServices.formatRupiah(cacatan.jumlah),
+                      AppServices.formatRupiah(catatan.jumlah),
                       style: TextStyle(
-                        color: cacatan.jenisCacatan == "pengeluaran"
+                        color: catatan.jenisCatatan == "pengeluaran"
                             ? Colors.red
                             : Colors.green,
                         fontWeight: FontWeight.bold,
@@ -248,14 +248,14 @@ class _CacatanPageState extends State<CacatanPage> {
                       children: [
                         Text(
                           DateFormat.d()
-                              .format(DateTime.parse(cacatan.tanggal)),
+                              .format(DateTime.parse(catatan.tanggal)),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
                               color: Colors.teal[700]),
                         ),
                         Text(DateFormat.MMM()
-                            .format(DateTime.parse(cacatan.tanggal))),
+                            .format(DateTime.parse(catatan.tanggal))),
                       ],
                     ));
               },
@@ -287,12 +287,12 @@ class _CacatanPageState extends State<CacatanPage> {
                             children: [
                               Center(
                                   child: Text(
-                                "Tambahkan cacatan",
+                                "Tambahkan catatan",
                                 style: TextStyle(
                                     color: Colors.teal[700],
                                     fontWeight: FontWeight.bold),
                               )),
-                              Text("Jenis cacatan : "),
+                              Text("Jenis catatan : "),
                               Row(
                                 children: [
                                   Row(
@@ -366,7 +366,7 @@ class _CacatanPageState extends State<CacatanPage> {
                               ),
                               TextFormField(
                                 decoration:
-                                    InputDecoration(labelText: "Isi Cacatan",
+                                    InputDecoration(labelText: "Isi Catatan",
                                         labelStyle: TextStyle(color: Colors.teal[700]),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -395,7 +395,7 @@ class _CacatanPageState extends State<CacatanPage> {
 
 
                                     ),
-                                controller: _isiCacatanController,
+                                controller: _isiCatatanController,
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.number,
@@ -431,24 +431,24 @@ class _CacatanPageState extends State<CacatanPage> {
                               ),
                               ElevatedButton(
                                 onPressed: () async {
-                                  AppServices.createCacatan(Cacatan(
+                                  AppServices.createCatatan(Catatan(
                                       idUser: widget.user.uid,
-                                      jenisCacatan: pengeluaran == true
+                                      jenisCatatan: pengeluaran == true
                                           ? "pengeluaran"
                                           : "pemasukan",
                                       tanggal: _selectedDate.toString(),
-                                      isiCacatan: _isiCacatanController.text,
+                                      isiCatatan: _isiCatatanController.text,
                                       jumlah:
                                           int.parse(_jumlahController.text)));
                                   setState(() {
                                     _jumlahController.clear();
-                                    _isiCacatanController.clear();
+                                    _isiCatatanController.clear();
                                   });
 
                                   setModalState(() {
                                     _selectedDate = DateTime.now();
                                   });
-                                  await _fetchCacatanList();
+                                  await _fetchCatatanList();
                                   await keuntunganBersih();
                                   Navigator.pop(context);
                                   setState(() {});

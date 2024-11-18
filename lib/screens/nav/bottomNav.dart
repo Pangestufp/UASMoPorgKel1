@@ -5,7 +5,7 @@ import 'package:umkmfirebase/models/pengingat.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/screens/invoice/invoicePage.dart';
 import 'package:umkmfirebase/screens/pengaturan/pengaturan.dart';
-import 'package:umkmfirebase/screens/cacatan/cacatanPage.dart';
+import 'package:umkmfirebase/screens/catatan/catatanPage.dart';
 import 'package:umkmfirebase/screens/home/homePage.dart';
 import 'package:umkmfirebase/screens/inventaris/inventarisPage.dart';
 import 'package:umkmfirebase/screens/laporanKeuangan/keuanganPage.dart';
@@ -55,7 +55,7 @@ class _BottomNavState extends State<BottomNav> {
       _listPages = [
         HomePage(changePage: _changePage, user: user!),
         InventarisPage(user: user!),
-        CacatanPage(user: user!),
+        CatatanPage(user: user!),
         PenjualanPage(
           user: user!,
         ),
@@ -65,7 +65,7 @@ class _BottomNavState extends State<BottomNav> {
       _listNamePages = [
         "Beranda",
         "Inventaris",
-        "Cacatan",
+        "Catatan",
         "Penjualan",
         "Keuangan",
       ];
