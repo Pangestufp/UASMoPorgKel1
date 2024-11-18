@@ -162,7 +162,7 @@ class _CacatanPageState extends State<CacatanPage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: 50.0), // Jarak kiri dan kanan sebesar 16 piksel
+                horizontal: 35.0), // Jarak kiri dan kanan sebesar 16 piksel
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
@@ -300,6 +300,7 @@ class _CacatanPageState extends State<CacatanPage> {
                                       Radio<bool>(
                                         value: true,
                                         groupValue: pengeluaran,
+                                        activeColor: Colors.teal[700],
                                         onChanged: (value) {
                                           setModalState(() {
                                             pengeluaran = value!;
@@ -314,6 +315,7 @@ class _CacatanPageState extends State<CacatanPage> {
                                       Radio<bool>(
                                         value: false,
                                         groupValue: pengeluaran,
+                                        activeColor: Colors.teal[700],
                                         onChanged: (value) {
                                           setModalState(() {
                                             pengeluaran = value!;
@@ -364,13 +366,67 @@ class _CacatanPageState extends State<CacatanPage> {
                               ),
                               TextFormField(
                                 decoration:
-                                    InputDecoration(labelText: "Isi Cacatan"),
+                                    InputDecoration(labelText: "Isi Cacatan",
+                                        labelStyle: TextStyle(color: Colors.teal[700]),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      )
+
+
+                                    ),
                                 controller: _isiCacatanController,
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.number,
                                 decoration:
-                                    InputDecoration(labelText: "Jumlah"),
+                                    InputDecoration(labelText: "Jumlah",
+                                        labelStyle: TextStyle(color: Colors.teal[700]),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.teal,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.red,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        focusedErrorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.teal,
+                                            width: 2.0,
+                                          ),
+                                        )
+                                    ),
                                 controller: _jumlahController,
                               ),
                               ElevatedButton(
@@ -412,7 +468,8 @@ class _CacatanPageState extends State<CacatanPage> {
             },
           );
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white,),
+          backgroundColor: Color(0xFF00A86B)
       ),
     );
   }
