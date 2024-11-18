@@ -79,15 +79,15 @@ class _HomePageState extends State<HomePage> {
 
   Widget headerSection() {
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20,top: 4, bottom: 4),
+      padding: EdgeInsets.only(left: 2, right: 40,top: 4, bottom: 4),
       decoration: BoxDecoration(
-        color: Colors.teal[200], // Warna latar belakang header
+        color: Colors.teal[700], // Warna latar belakang header
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.business, color: Colors.white, size: 50.0),
+          Icon(Icons.business, color: Colors.white, size: 40.0),
           Container(height: 90, width: 2, color: Colors.white,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                 AppServices.formatRupiah(keuntungan!),
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               menuItem("Keuangan", "assets/icons/report.png", 4),
-              menuItem("Download", "assets/icons/tersimpan.png", 5),
+              menuItem("Invoice", "assets/icons/tersimpan.png", 5),
               menuItem("Pengingat", "assets/icons/pengingat.png", 6),
             ],
           ),
@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: 10),
           Card(
-            color: Colors.orange[100],
+            color: Colors.lightGreen[100],
             elevation: 4.0,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
             child: Padding(
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: 10),
           Card(
-            color: Colors.orange[100],
+            color: Colors.lightGreen[100],
             elevation: 4.0,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
             child: Padding(
