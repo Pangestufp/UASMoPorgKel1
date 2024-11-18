@@ -256,7 +256,7 @@ class _RegisterState extends State<Register> {
     );
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true, // Mengizinkan layar menyesuaikan saat keyboard muncul
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -268,10 +268,9 @@ class _RegisterState extends State<Register> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 50.0),
-            // Padding atas dan bawah
             child: Column(
+              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran kolom
               crossAxisAlignment: CrossAxisAlignment.center,
-              // Atur agar konten di tengah secara horizontal
               children: [
                 LottieBuilder.asset(
                   "assets/images/register.json",
@@ -285,7 +284,6 @@ class _RegisterState extends State<Register> {
                   key: _globalKey,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
-                    // Menambahkan padding pada Form
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -311,5 +309,6 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+
   }
 }
