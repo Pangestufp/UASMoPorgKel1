@@ -34,8 +34,8 @@ class _DetailbarangState extends State<Detailbarang> {
                 child: Stack(
                   children: [
                     Container(
-                      width: 200,
-                      height: 200,
+                      width: 300,
+                      height: 300,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         gradient: LinearGradient(
@@ -62,15 +62,15 @@ class _DetailbarangState extends State<Detailbarang> {
                             borderRadius: BorderRadius.circular(16),
                             child: Image.file(
                               File(widget.benda.urlFotoBarang),
-                              width: 200,
-                              height: 200,
+                              width: 300,
+                              height: 300,
                               fit: BoxFit.cover,
                             ),
                           );
                         } else {
                           return Container(
-                            width: 200,
-                            height: 200,
+                            width: 300,
+                            height: 300,
                             decoration: BoxDecoration(
                               color: Colors.grey,
                               borderRadius: BorderRadius.circular(16),
@@ -85,8 +85,8 @@ class _DetailbarangState extends State<Detailbarang> {
                       },
                     )
                         : Container(
-                      width: 200,
-                      height: 200,
+                      width: 300,
+                      height: 300,
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(16),
@@ -102,52 +102,56 @@ class _DetailbarangState extends State<Detailbarang> {
               ),
               const SizedBox(height: 16),
               Card(
+                color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
                 elevation: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.benda.namaBarang,
-                        style: TextStyle(
-                          color: Colors.teal[700],
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.benda.namaBarang,
+                          style: TextStyle(
+                            color: Colors.teal[700],
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Deskripsi: ${widget.benda.deskripsiBarang}",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
+                        const SizedBox(height: 8),
+                        Text(
+                          "Deskripsi: ${widget.benda.deskripsiBarang}",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Harga Beli: Rp${widget.benda.hargaBeli}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
+                        const SizedBox(height: 16),
+                        Text(
+                          'Harga Beli: Rp${widget.benda.hargaBeli}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Harga Jual: Rp${widget.benda.hargaJual}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
+                        const SizedBox(height: 8),
+                        Text(
+                          'Harga Jual: Rp${widget.benda.hargaJual}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 50), // Tambahkan jarak di atas tombol
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
