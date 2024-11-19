@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:umkmfirebase/models/pengingat.dart';
@@ -91,7 +92,10 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return user == null
-        ? Center(child: CircularProgressIndicator())
+        ? Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: LottieBuilder.asset("assets/images/loading.json")),
+    )
         : Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
