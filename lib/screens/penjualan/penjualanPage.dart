@@ -334,12 +334,7 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                 )),
                             TextButton(
                                 onPressed: () async {
-                                  await updateStock();
 
-                                  AppServices.createCatatan(
-                                      Catatan(idUser: widget.user.uid, jenisCatatan: "pemasukan", tanggal: DateTime.now().toString(), isiCatatan: "Penjualan Item atas nama ${_namaController.text}", jumlah: hitungKeuntungan())
-                                  );
-                                  
                                   String? pdf =
                                       await AppServices.createInvoicePDF(
                                           Invoice(
@@ -358,6 +353,12 @@ class _PenjualanPageState extends State<PenjualanPage> {
                                       waktu: DateTime.now().toString(),
                                       urlInvoice: "${pdf}",
                                       transaksiList: _transaksiList));
+
+                                  await updateStock();
+
+                                  AppServices.createCatatan(
+                                      Catatan(idUser: widget.user.uid, jenisCatatan: "pemasukan", tanggal: DateTime.now().toString(), isiCatatan: "Penjualan Item atas nama ${_namaController.text}", jumlah: hitungKeuntungan())
+                                  );
 
 
                                   _transaksiList.clear();
