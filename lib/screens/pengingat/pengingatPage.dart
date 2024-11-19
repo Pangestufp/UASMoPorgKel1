@@ -33,11 +33,9 @@ class _PengingatPageState extends State<PengingatPage> {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
-        title: Center(
-          child: Text(
-            "Pengingat",
-            style: TextStyle(color: Colors.white),
-          ),
+        title: Text(
+          "Pengingat",
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.teal[700],
       ),

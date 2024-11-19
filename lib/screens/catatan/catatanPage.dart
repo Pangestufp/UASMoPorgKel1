@@ -41,8 +41,7 @@ class _CatatanPageState extends State<CatatanPage> {
                 onPrimary: Colors.white,
                 surface: Colors.white,
               ),
-              dialogBackgroundColor: Colors.white
-          ),
+              dialogBackgroundColor: Colors.white),
           child: child!,
         );
       },
@@ -228,11 +227,16 @@ class _CatatanPageState extends State<CatatanPage> {
                       Colors.black), // Mengatur warna teks di dalam TextField
             ),
           ),
-          SizedBox(height: 15,),
-          Divider(height: 1,color: Colors.teal[700],),
+          SizedBox(
+            height: 15,
+          ),
+          Divider(
+            height: 1,
+            color: Colors.teal[700],
+          ),
           Expanded(
             child: ListView.separated(
-              separatorBuilder: (context, index){
+              separatorBuilder: (context, index) {
                 return Divider(
                   height: 1,
                   color: Color(0xFF00A86B),
@@ -242,6 +246,71 @@ class _CatatanPageState extends State<CatatanPage> {
               itemBuilder: (context, index) {
                 final catatan = _filteredCatatanList[index];
                 return ListTile(
+                    onLongPress: () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.grey[50],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              title: Text(
+                                "Konfirmasi Hapus",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              content: Container(
+                                width: double.maxFinite,
+                                height: 100,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Apakah anda ingin menghapus dengan isi \"${catatan.isiCatatan}\" ?",
+                                      style: TextStyle(
+                                          color: Colors.teal[700]),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton.icon(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(Icons.check_circle,
+                                      color: Colors.teal[700]),
+                                  label: Text(
+                                    "Kembali",
+                                    style: TextStyle(
+                                      color: Colors.teal[700],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () async {
+                                    AppServices.deleteCatatan(catatan);
+                                    Navigator.pop(context);
+                                    await _fetchCatatanList();
+                                  },
+                                  icon: Icon(Icons.check_circle,
+                                      color: Colors.red),
+                                  label: Text(
+                                    "Oke",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                    },
                     title: Text(
                         catatan.jenisCatatan == "pengeluaran"
                             ? "Pengeluaran"
@@ -283,111 +352,115 @@ class _CatatanPageState extends State<CatatanPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return StatefulBuilder(
-                  builder: (context, StateSetter setModalState) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    top: 16,
-                    left: 16,
-                    right: 16,
-                    bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Form(
-                          autovalidateMode: AutovalidateMode.always,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Center(
-                                  child: Text(
-                                "Tambahkan catatan",
-                                style: TextStyle(
-                                    color: Colors.teal[700],
-                                    fontWeight: FontWeight.bold),
-                              )),
-                              Text("Jenis catatan : "),
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Radio<bool>(
-                                        value: true,
-                                        groupValue: pengeluaran,
-                                        activeColor: Colors.teal[700],
-                                        onChanged: (value) {
-                                          setModalState(() {
-                                            pengeluaran = value!;
-                                          });
-                                        },
-                                      ),
-                                      Text("Pengeluaran"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Radio<bool>(
-                                        value: false,
-                                        groupValue: pengeluaran,
-                                        activeColor: Colors.teal[700],
-                                        onChanged: (value) {
-                                          setModalState(() {
-                                            pengeluaran = value!;
-                                          });
-                                        },
-                                      ),
-                                      Text("Pemasukan"),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              TextButton(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context) {
+                return StatefulBuilder(
+                    builder: (context, StateSetter setModalState) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: 16,
+                      left: 16,
+                      right: 16,
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Form(
+                            autovalidateMode: AutovalidateMode.always,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                    child: Text(
+                                  "Tambahkan catatan",
+                                  style: TextStyle(
+                                      color: Colors.teal[700],
+                                      fontWeight: FontWeight.bold),
+                                )),
+                                Text("Jenis catatan : "),
+                                Row(
                                   children: [
-                                    Text("Tanggal",
-                                        style: TextStyle(
-                                            color: Colors.teal[700],
-                                            fontSize: 16)),
-                                    SizedBox(height: 3),
                                     Row(
                                       children: [
-                                        Icon(Icons.calendar_today,
-                                            size: 20.0, color: Colors.black54),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          DateFormat.yMMMEd().format(
-                                              _selectedDate ?? DateTime.now()),
-                                          style: TextStyle(
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.bold),
+                                        Radio<bool>(
+                                          value: true,
+                                          groupValue: pengeluaran,
+                                          activeColor: Colors.teal[700],
+                                          onChanged: (value) {
+                                            setModalState(() {
+                                              pengeluaran = value!;
+                                            });
+                                          },
                                         ),
-                                        Icon(Icons.arrow_drop_down,
-                                            color: Colors.black54),
+                                        Text("Pengeluaran"),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio<bool>(
+                                          value: false,
+                                          groupValue: pengeluaran,
+                                          activeColor: Colors.teal[700],
+                                          onChanged: (value) {
+                                            setModalState(() {
+                                              pengeluaran = value!;
+                                            });
+                                          },
+                                        ),
+                                        Text("Pemasukan"),
                                       ],
                                     ),
                                   ],
                                 ),
-                                onPressed: () async {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                  DateTime pickerDate = await _selectDate(
-                                      _selectedDate ?? DateTime.now());
-                                  setModalState(() {
-                                    _selectedDate = pickerDate;
-                                  });
-                                },
-                              ),
-                              TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: "Isi Catatan",
-                                        labelStyle: TextStyle(color: Colors.teal[700]),
+                                TextButton(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Tanggal",
+                                          style: TextStyle(
+                                              color: Colors.teal[700],
+                                              fontSize: 16)),
+                                      SizedBox(height: 3),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.calendar_today,
+                                              size: 20.0,
+                                              color: Colors.black54),
+                                          SizedBox(width: 5),
+                                          Text(
+                                            DateFormat.yMMMEd().format(
+                                                _selectedDate ??
+                                                    DateTime.now()),
+                                            style: TextStyle(
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Icon(Icons.arrow_drop_down,
+                                              color: Colors.black54),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  onPressed: () async {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    DateTime pickerDate = await _selectDate(
+                                        _selectedDate ?? DateTime.now());
+                                    setModalState(() {
+                                      _selectedDate = pickerDate;
+                                    });
+                                  },
+                                ),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: "Isi Catatan",
+                                      labelStyle:
+                                          TextStyle(color: Colors.teal[700]),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Colors.grey,
@@ -411,88 +484,88 @@ class _CatatanPageState extends State<CatatanPage> {
                                           color: Colors.teal,
                                           width: 2.0,
                                         ),
-                                      )
+                                      )),
+                                  controller: _isiCatatanController,
+                                ),
+                                TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      labelText: "Jumlah",
+                                      labelStyle:
+                                          TextStyle(color: Colors.teal[700]),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.teal,
+                                          width: 2.0,
+                                        ),
+                                      )),
+                                  controller: _jumlahController,
+                                ),
+                                Center(
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      AppServices.createCatatan(Catatan(
+                                          idUser: widget.user.uid,
+                                          jenisCatatan: pengeluaran == true
+                                              ? "pengeluaran"
+                                              : "pemasukan",
+                                          tanggal: _selectedDate.toString(),
+                                          isiCatatan:
+                                              _isiCatatanController.text,
+                                          jumlah: int.parse(
+                                              _jumlahController.text)));
+                                      setState(() {
+                                        _jumlahController.clear();
+                                        _isiCatatanController.clear();
+                                      });
 
-
+                                      setModalState(() {
+                                        _selectedDate = DateTime.now();
+                                      });
+                                      await _fetchCatatanList();
+                                      await keuntunganBersih();
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      "Tambahkan",
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.teal),
                                     ),
-                                controller: _isiCatatanController,
-                              ),
-                              TextFormField(
-                                keyboardType: TextInputType.number,
-                                decoration:
-                                    InputDecoration(labelText: "Jumlah",
-                                        labelStyle: TextStyle(color: Colors.teal[700]),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.grey,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.teal,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        errorBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.red,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        focusedErrorBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.teal,
-                                            width: 2.0,
-                                          ),
-                                        )
-                                    ),
-                                controller: _jumlahController,
-                              ),
-                              Center(
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    AppServices.createCatatan(Catatan(
-                                        idUser: widget.user.uid,
-                                        jenisCatatan: pengeluaran == true
-                                            ? "pengeluaran"
-                                            : "pemasukan",
-                                        tanggal: _selectedDate.toString(),
-                                        isiCatatan: _isiCatatanController.text,
-                                        jumlah:
-                                            int.parse(_jumlahController.text)));
-                                    setState(() {
-                                      _jumlahController.clear();
-                                      _isiCatatanController.clear();
-                                    });
-
-                                    setModalState(() {
-                                      _selectedDate = DateTime.now();
-                                    });
-                                    await _fetchCatatanList();
-                                    await keuntunganBersih();
-                                    Navigator.pop(context);
-                                    setState(() {});
-                                  },
-                                  child: Text(
-                                    "Tambahkan",
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.teal),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                );
-              });
-            },
-          );
-        },
-        child: Icon(Icons.add, color: Colors.white,),
-          backgroundColor: Color(0xFF00A86B)
-      ),
+                              ],
+                            ))
+                      ],
+                    ),
+                  );
+                });
+              },
+            );
+          },
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          backgroundColor: Color(0xFF00A86B)),
     );
   }
 }

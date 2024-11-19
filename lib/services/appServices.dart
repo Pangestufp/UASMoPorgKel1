@@ -79,7 +79,7 @@ class AppServices {
     });
   }
 
-  void deleteBarang(Barang barang) {
+  static void deleteBarang(Barang barang) {
     FirebaseFirestore.instance
         .collection('barang')
         .doc(barang.idBarang)

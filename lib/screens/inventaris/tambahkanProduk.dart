@@ -74,6 +74,9 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
       appBar: AppBar(
         title: Text("Daftar Barang", style: const TextStyle(color: Colors.white),) ,
         backgroundColor: Colors.teal[700],
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          )
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -83,12 +86,44 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: "Cari Produk",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                fillColor: Colors.white, // Warna latar belakang putih
-                filled: true, // Mengaktifkan latar belakang
+                  prefixIcon: Icon(Icons.search,color: Colors.teal,),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  ),
+
+                  labelStyle: TextStyle(color: Colors.teal[700]),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.teal,
+                      width: 2.0,
+                    ),
+                  ) // Mengaktifkan latar belakang
               ),
             ),
             SizedBox(height: 10),
@@ -100,13 +135,15 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                 childAspectRatio: 0.75,
                 children: _filteredBarangList.map((barang) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Detailbarang(benda: barang),
                         ),
-                      );
+                      ).then((_) async {
+                        await _fetchBarangList();
+                      });
                     },
                     onLongPress: () {
                       _namaBarangController.text = barang.namaBarang;
@@ -137,15 +174,68 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                         children: [
                                           TextFormField(
                                             decoration: InputDecoration(
-                                                labelText: "Nama Barang"),
+                                                labelText: "Nama Barang",
+                                                labelStyle: TextStyle(color: Colors.teal[700]),
+                                                enabledBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                ),
+                                                errorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedErrorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                )
+                                            ),
                                             controller: _namaBarangController,
                                           ),
                                           TextFormField(
                                             decoration: InputDecoration(
-                                                labelText: "Deskripsi Barang"),
+                                                labelText: "Deskripsi Barang",
+                                                labelStyle: TextStyle(color: Colors.teal[700]),
+                                                enabledBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                ),
+                                                errorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedErrorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                )
+                                            ),
                                             controller:
                                                 _deskripsiBarangController,
                                           ),
+                                          SizedBox(height: 5,),
                                           GestureDetector(
                                             onTap: () async {
                                               await _pickImage();
@@ -162,7 +252,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                                   4,
                                               decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: Colors.blue,
+                                                      color: Colors.teal,
                                                       width: 2)),
                                               child: _image == null
                                                   ? FutureBuilder<bool>(
@@ -210,13 +300,65 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                           TextFormField(
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
-                                                labelText: "Harga Beli Barang"),
+                                                labelText: "Harga Beli Barang",
+                                                labelStyle: TextStyle(color: Colors.teal[700]),
+                                                enabledBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                ),
+                                                errorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedErrorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                )
+                                            ),
                                             controller: _hargaBeliController,
                                           ),
                                           TextFormField(
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
-                                                labelText: "Harga Jual Barang"),
+                                                labelText: "Harga Jual Barang",
+                                                labelStyle: TextStyle(color: Colors.teal[700]),
+                                                enabledBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                ),
+                                                errorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                                focusedErrorBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.teal,
+                                                    width: 2.0,
+                                                  ),
+                                                )
+                                            ),
                                             controller: _hargaJualController,
                                           ),
                                           ElevatedButton(
@@ -258,7 +400,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                               await _fetchBarangList();
                                               Navigator.pop(context);
                                             },
-                                            child: Text("Edit"),
+                                            child: Text("Edit",style: TextStyle(color: Colors.teal[700]),),
                                           ),
                                         ],
                                       ))
@@ -320,14 +462,14 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  "Harga jual Rp ${barang.hargaJual}",
+                                  "Modal : "+AppServices.formatRupiah(barang.hargaJual),
                                   style: TextStyle(
                                     fontSize: 12,
                                       color: Colors.teal[800],
                                   ),
                                 ),
                                 Text(
-                                  "Harga beli Rp ${barang.hargaBeli}",
+                                  "Harga : "+AppServices.formatRupiah(barang.hargaBeli),
                                   style: TextStyle(
                                     fontSize: 12,
                                       color: Colors.teal[800]
@@ -370,14 +512,67 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                             children: [
                               TextFormField(
                                 decoration:
-                                    InputDecoration(labelText: "Nama Barang"),
+                                    InputDecoration(labelText: "Nama Barang",
+                                        labelStyle: TextStyle(color: Colors.teal[700]),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.teal,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.red,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        focusedErrorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.teal,
+                                            width: 2.0,
+                                          ),
+                                        )
+                                    ),
                                 controller: _namaBarangController,
                               ),
                               TextFormField(
                                 decoration: InputDecoration(
-                                    labelText: "Deskripsi Barang"),
+                                    labelText: "Deskripsi Barang",
+                                    labelStyle: TextStyle(color: Colors.teal[700]),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.teal,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.red,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.teal,
+                                        width: 2.0,
+                                      ),
+                                    )
+                                ),
                                 controller: _deskripsiBarangController,
                               ),
+                              SizedBox(height: 5,),
                               GestureDetector(
                                 onTap: () async {
                                   await _pickImage();
@@ -390,7 +585,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                       MediaQuery.of(context).size.height / 4,
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Colors.blue, width: 2)),
+                                          color: Colors.teal, width: 2)),
                                   child: _image == null
                                       ? Container(
                                           child: Column(
@@ -399,8 +594,8 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Icon(Icons.image_not_supported),
-                                              Text("Tidak ada gambar dipilih")
+                                              Icon(Icons.image_not_supported,color: Colors.teal,size: 50,),
+                                              Text("Tidak ada gambar dipilih",style: TextStyle(color: Colors.teal[700]),)
                                             ],
                                           ),
                                         )
@@ -413,13 +608,65 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                               TextFormField(
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                    labelText: "Harga Beli Barang"),
+                                    labelText: "Harga Beli Barang",
+                                    labelStyle: TextStyle(color: Colors.teal[700]),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.teal,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.red,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.teal,
+                                        width: 2.0,
+                                      ),
+                                    )
+                                ),
                                 controller: _hargaBeliController,
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                    labelText: "Harga Jual Barang"),
+                                    labelText: "Harga Jual Barang",
+                                    labelStyle: TextStyle(color: Colors.teal[700]),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.teal,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.red,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.teal,
+                                        width: 2.0,
+                                      ),
+                                    )
+                                ),
                                 controller: _hargaJualController,
                               ),
                               ElevatedButton(
@@ -450,7 +697,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                   Navigator.pop(context);
                                   setState(() {});
                                 },
-                                child: Text("Tambahkan"),
+                                child: Text("Tambahkan",style: TextStyle(color: Colors.teal[700]),),
                               ),
                             ],
                           ))

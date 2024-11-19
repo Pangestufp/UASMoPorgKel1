@@ -423,9 +423,9 @@ class _KeuanganPageState extends State<KeuanganPage> {
     final maxValue = data.reduce((curr, next) => curr > next ? curr : next);
 
     // Calculate appropriate interval based on max value
-    double interval = 1000000; // default interval
+    double interval = 1000000;
     if (maxValue > 10000000) {
-      interval = 40000000; // use 5M interval for values > 10M
+      interval = 40000000;
     }
     if (maxValue > 50000000) {
       interval = 80000000; // use 10M interval for values > 50M

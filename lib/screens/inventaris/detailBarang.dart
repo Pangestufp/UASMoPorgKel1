@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:umkmfirebase/models/barang.dart';
+import 'package:umkmfirebase/services/appServices.dart';
 
 class Detailbarang extends StatefulWidget {
   final Barang benda;
@@ -50,25 +51,41 @@ class _DetailbarangState extends State<Detailbarang> {
                     ),
                     widget.benda.urlFotoBarang.isNotEmpty
                         ? FutureBuilder<bool>(
-                      future: File(widget.benda.urlFotoBarang).exists(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
+                            future: File(widget.benda.urlFotoBarang).exists(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
 
-                        if (snapshot.hasData && snapshot.data == true) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.file(
-                              File(widget.benda.urlFotoBarang),
-                              width: 300,
-                              height: 300,
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        } else {
-                          return Container(
+                              if (snapshot.hasData && snapshot.data == true) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.file(
+                                    File(widget.benda.urlFotoBarang),
+                                    width: 300,
+                                    height: 300,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  width: 300,
+                                  height: 300,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: const Icon(
+                                    Icons.image_not_supported,
+                                    color: Colors.white,
+                                    size: 100,
+                                  ),
+                                );
+                              }
+                            },
+                          )
+                        : Container(
                             width: 300,
                             height: 300,
                             decoration: BoxDecoration(
@@ -80,23 +97,7 @@ class _DetailbarangState extends State<Detailbarang> {
                               color: Colors.white,
                               size: 100,
                             ),
-                          );
-                        }
-                      },
-                    )
-                        : Container(
-                      width: 300,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        color: Colors.white,
-                        size: 100,
-                      ),
-                    ),
+                          ),
                   ],
                 ),
               ),
@@ -132,7 +133,8 @@ class _DetailbarangState extends State<Detailbarang> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Harga Beli: Rp${widget.benda.hargaBeli}',
+                          'Harga Beli : ' +
+                              AppServices.formatRupiah(widget.benda.hargaBeli),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -140,7 +142,8 @@ class _DetailbarangState extends State<Detailbarang> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Harga Jual: Rp${widget.benda.hargaJual}',
+                          'Harga Jual : ' +
+                              AppServices.formatRupiah(widget.benda.hargaJual),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -153,22 +156,113 @@ class _DetailbarangState extends State<Detailbarang> {
               ),
               const SizedBox(height: 50), // Tambahkan jarak di atas tombol
               Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: Colors.grey[50],
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                title: Text(
+                                  "Konfirmasi Hapus",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                                content: Container(
+                                  width: double.maxFinite,
+                                  height: 50,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Apakah anda ingin menghapus ${widget.benda.namaBarang} ?",
+                                        style: TextStyle(
+                                            color: Colors.teal[700],
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(Icons.check_circle,
+                                        color: Colors.teal[700]),
+                                    label: Text(
+                                      "Kembali",
+                                      style: TextStyle(
+                                        color: Colors.teal[700],
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton.icon(
+                                    onPressed: () async {
+                                      AppServices.deleteBarang(widget.benda);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(Icons.check_circle,
+                                        color: Colors.red),
+                                    label: Text(
+                                      "Oke",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Material(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                              color: Colors.red),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                            size: 35,
+                          ),
+                        ),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 16),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    "Kembali",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 16),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Kembali",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

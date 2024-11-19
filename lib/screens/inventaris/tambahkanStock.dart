@@ -108,6 +108,7 @@ class _TambahkanStockState extends State<TambahkanStock> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: 'Cari Barang',
+
                 prefixIcon: Icon(Icons.search,color: Colors.teal,),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -272,6 +273,8 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                               labelText: "Jumlah Barang",
+
+
                                               labelStyle: TextStyle(color: Colors.teal[700]),
                                               enabledBorder: UnderlineInputBorder(
                                                 borderSide: BorderSide(
@@ -297,6 +300,8 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                                   width: 2.0,
                                                 ),
                                               )
+
+
                                           ),
                                           controller: _stockController,
                                         ),
