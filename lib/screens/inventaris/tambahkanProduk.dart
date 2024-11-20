@@ -462,14 +462,14 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                                 ),
                                 SizedBox(height: 4),
                                 Text(
-                                  "Modal : "+AppServices.formatRupiah(barang.hargaJual),
+                                  "Modal : "+AppServices.formatRupiah(barang.hargaBeli),
                                   style: TextStyle(
                                     fontSize: 12,
                                       color: Colors.teal[800],
                                   ),
                                 ),
                                 Text(
-                                  "Harga : "+AppServices.formatRupiah(barang.hargaBeli),
+                                  "Harga : "+AppServices.formatRupiah(barang.hargaJual),
                                   style: TextStyle(
                                     fontSize: 12,
                                       color: Colors.teal[800]
