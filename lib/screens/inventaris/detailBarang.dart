@@ -5,8 +5,8 @@ import 'package:umkmfirebase/models/barang.dart';
 import 'package:umkmfirebase/services/appServices.dart';
 
 class Detailbarang extends StatefulWidget {
-  final Barang benda;
-  Detailbarang({super.key, required this.benda});
+  final Barang barang;
+  Detailbarang({super.key, required this.barang});
 
   @override
   State<Detailbarang> createState() => _DetailbarangState();
@@ -19,7 +19,7 @@ class _DetailbarangState extends State<Detailbarang> {
       backgroundColor: Colors.lightGreen.shade50,
       appBar: AppBar(
         title: Text(
-          widget.benda.namaBarang,
+          widget.barang.namaBarang,
           style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.teal[700],
@@ -49,9 +49,9 @@ class _DetailbarangState extends State<Detailbarang> {
                         ),
                       ),
                     ),
-                    widget.benda.urlFotoBarang.isNotEmpty
+                    widget.barang.urlFotoBarang.isNotEmpty
                         ? FutureBuilder<bool>(
-                            future: File(widget.benda.urlFotoBarang).exists(),
+                            future: File(widget.barang.urlFotoBarang).exists(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -62,7 +62,7 @@ class _DetailbarangState extends State<Detailbarang> {
                                 return ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
                                   child: Image.file(
-                                    File(widget.benda.urlFotoBarang),
+                                    File(widget.barang.urlFotoBarang),
                                     width: 300,
                                     height: 300,
                                     fit: BoxFit.cover,
@@ -116,7 +116,7 @@ class _DetailbarangState extends State<Detailbarang> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.benda.namaBarang,
+                          widget.barang.namaBarang,
                           style: TextStyle(
                             color: Colors.teal[700],
                             fontSize: 24,
@@ -125,7 +125,7 @@ class _DetailbarangState extends State<Detailbarang> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "Deskripsi: ${widget.benda.deskripsiBarang}",
+                          "Deskripsi: ${widget.barang.deskripsiBarang}",
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -134,7 +134,7 @@ class _DetailbarangState extends State<Detailbarang> {
                         const SizedBox(height: 16),
                         Text(
                           'Harga Beli : ' +
-                              AppServices.formatRupiah(widget.benda.hargaBeli),
+                              AppServices.formatRupiah(widget.barang.hargaBeli),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -143,7 +143,7 @@ class _DetailbarangState extends State<Detailbarang> {
                         const SizedBox(height: 8),
                         Text(
                           'Harga Jual : ' +
-                              AppServices.formatRupiah(widget.benda.hargaJual),
+                              AppServices.formatRupiah(widget.barang.hargaJual),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -183,7 +183,7 @@ class _DetailbarangState extends State<Detailbarang> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Apakah anda ingin menghapus ${widget.benda.namaBarang} ?",
+                                        "Apakah anda ingin menghapus ${widget.barang.namaBarang} ?",
                                         style: TextStyle(
                                             color: Colors.teal[700],
                                             fontWeight: FontWeight.bold),
@@ -208,7 +208,7 @@ class _DetailbarangState extends State<Detailbarang> {
                                   ),
                                   TextButton.icon(
                                     onPressed: () async {
-                                      AppServices.deleteBarang(widget.benda);
+                                      AppServices.deleteBarang(widget.barang);
                                       Navigator.pop(context);
                                       Navigator.pop(context);
                                     },

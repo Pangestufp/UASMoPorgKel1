@@ -139,7 +139,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Detailbarang(benda: barang),
+                          builder: (context) => Detailbarang(barang: barang),
                         ),
                       ).then((_) async {
                         await _fetchBarangList();
