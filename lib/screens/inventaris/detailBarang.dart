@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:umkmfirebase/models/barang.dart';
 import 'package:umkmfirebase/services/appServices.dart';
@@ -154,7 +153,7 @@ class _DetailbarangState extends State<Detailbarang> {
                   ),
                 ),
               ),
-              const SizedBox(height: 50), // Tambahkan jarak di atas tombol
+              const SizedBox(height: 50),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

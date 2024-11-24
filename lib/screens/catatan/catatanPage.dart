@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:umkmfirebase/models/catatan.dart';
-import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/services/appServices.dart';
 
@@ -178,7 +177,7 @@ class _CatatanPageState extends State<CatatanPage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: 35.0), // Jarak kiri dan kanan sebesar 16 piksel
+                horizontal: 35.0),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
@@ -224,7 +223,7 @@ class _CatatanPageState extends State<CatatanPage> {
               ),
               style: TextStyle(
                   color:
-                      Colors.black), // Mengatur warna teks di dalam TextField
+                      Colors.black),
             ),
           ),
           SizedBox(

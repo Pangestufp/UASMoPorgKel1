@@ -62,7 +62,7 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
               });
             },
             onViewCreated: (PDFViewController controller) {
-              pdfViewController = controller; // Simpan kontroler untuk navigasi
+              pdfViewController = controller;
             },
             onPageChanged: (page, _) {
               setState(() {

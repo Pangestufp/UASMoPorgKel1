@@ -260,10 +260,10 @@ class _BottomNavState extends State<BottomNav> {
                             ),
                             ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red, // Warna background tombol
+                                backgroundColor: Colors.red,
                                 padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 12.0),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0), // Sudut tombol bisa disesuaikan
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
                               onPressed: () async {
@@ -272,13 +272,13 @@ class _BottomNavState extends State<BottomNav> {
                               },
                               icon: Icon(
                                 Icons.logout_sharp,
-                                color: Colors.white, // Warna ikon jadi putih agar kontras
+                                color: Colors.white,
                                 size: 24,
                               ),
                               label: Text(
                                 "Log Out",
                                 style: TextStyle(
-                                  color: Colors.white, // Warna teks juga putih
+                                  color: Colors.white,
                                   fontSize: 16,
                                 ),
                               ),

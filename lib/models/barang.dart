@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:umkmfirebase/models/userModel.dart';
 
 class Barang {
   String? idBarang;

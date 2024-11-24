@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lottie/lottie.dart';
 import 'package:umkmfirebase/models/barang.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/screens/inventaris/tambahkanProduk.dart';
@@ -109,7 +108,6 @@ class _InventarisPageState extends State<InventarisPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // Card untuk Jumlah Barang
                     Card(
                       color: Colors.teal[50],
                       elevation: 4,
@@ -137,7 +135,6 @@ class _InventarisPageState extends State<InventarisPage> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    // Card untuk Jumlah Total Stok
                     Card(
                       color: Colors.teal[50],
                       elevation: 4,
@@ -165,7 +162,6 @@ class _InventarisPageState extends State<InventarisPage> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    // Card untuk Jumlah Rata-rata Stok
                     Card(
                       color: Colors.teal[50],
                       elevation: 4,

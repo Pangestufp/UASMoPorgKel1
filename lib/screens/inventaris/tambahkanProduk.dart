@@ -123,7 +123,7 @@ class _TambahkanProdukState extends State<TambahkanProduk> {
                       color: Colors.teal,
                       width: 2.0,
                     ),
-                  ) // Mengaktifkan latar belakang
+                  )
               ),
             ),
             SizedBox(height: 10),

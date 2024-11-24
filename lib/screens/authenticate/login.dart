@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart'; // Pastikan untuk menambahkan paket Lottie di pubspec.yaml
+import 'package:lottie/lottie.dart';
 import 'package:umkmfirebase/services/auth.dart';
 
 class Login extends StatefulWidget {
@@ -19,7 +19,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // Definisi emailField
     final emailField = TextFormField(
       controller: _email,
       decoration: InputDecoration(
@@ -66,7 +65,6 @@ class _LoginState extends State<Login> {
     );
 
 
-    // Definisi passwordField
     final passwordField = TextFormField(
       obscureText: _showHide,
       controller: _password,
@@ -124,22 +122,21 @@ class _LoginState extends State<Login> {
       style: TextStyle(color: Colors.white),
     );
 
-    // Tombol untuk Sign In
     final txBbutton = TextButton(
       onPressed: () {
         widget.toggleview!();
       },
       child: Row(
-        mainAxisSize: MainAxisSize.min, // Supaya ukuran Row sesuai dengan kontennya
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             "Belum terdaftar?",
-            style: TextStyle(color: Colors.white), // Gaya teks
+            style: TextStyle(color: Colors.white),
           ),
-          SizedBox(width: 2), // Jarak antara teks dan ikon
+          SizedBox(width: 2),
           Icon(
-            Icons.navigate_next, // Ikon panah ke kanan
-            color: Colors.white, // Warna ikon
+            Icons.navigate_next,
+            color: Colors.white,
           ),
         ],
       ),
@@ -149,9 +146,9 @@ class _LoginState extends State<Login> {
     final loginEmailPasswordButton = Material(
       borderRadius: BorderRadius.circular(30),
       child: MaterialButton(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40), // Mengatur padding supaya tombol lebih kompak
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30), // Ujung tombol melengkung
+          borderRadius: BorderRadius.circular(30),
         ),
         onPressed: () async {
           if (_globalKey.currentState!.validate()) {
@@ -170,9 +167,9 @@ class _LoginState extends State<Login> {
         },
         child: Text(
           "Sign In Email",
-          style: TextStyle(fontSize: 16, color: Colors.black), // Gaya teks tombol
+          style: TextStyle(fontSize: 16, color: Colors.black),
         ),
-        color: Colors.white, // Warna tombol
+        color: Colors.white,
       ),
     );
 
@@ -190,7 +187,6 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Menambahkan animasi Lottie di sini
             LottieBuilder.asset(
               "assets/images/login.json",
               width: 200,
@@ -199,7 +195,7 @@ class _LoginState extends State<Login> {
               repeat: true,
               reverse: true,
             ),
-            SizedBox(height: 20), // Jarak antara animasi dan form
+            SizedBox(height: 20),
             Form(
               key: _globalKey,
               child: Padding(

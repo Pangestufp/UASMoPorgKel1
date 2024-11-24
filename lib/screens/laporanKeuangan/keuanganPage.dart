@@ -161,7 +161,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                   child: SingleChildScrollView(
                                     child: Column(
                                       children: [
-                                        // Card Pendapatan & Biaya
                                         Card(
                                           elevation: 4,
                                           shape: RoundedRectangleBorder(
@@ -181,7 +180,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                                   ),
                                                 ),
                                                 Divider(),
-                                                // Pendapatan
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(vertical: 8),
                                                   child: Row(
@@ -204,7 +202,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                                     ],
                                                   ),
                                                 ),
-                                                // Biaya
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(vertical: 8),
                                                   child: Row(
@@ -227,7 +224,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                                     ],
                                                   ),
                                                 ),
-                                                // Laba Bersih
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(vertical: 8),
                                                   child: Row(
@@ -263,7 +259,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
 
                                         SizedBox(height: 16),
 
-                                        // Card Arus Kas
                                         Card(
                                           elevation: 4,
                                           shape: RoundedRectangleBorder(
@@ -283,7 +278,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                                   ),
                                                 ),
                                                 Divider(),
-                                                // Kas Masuk
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(vertical: 8),
                                                   child: Row(
@@ -306,7 +300,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                                     ],
                                                   ),
                                                 ),
-                                                // Kas Keluar
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(vertical: 8),
                                                   child: Row(
@@ -329,7 +322,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                                     ],
                                                   ),
                                                 ),
-                                                // Arus Kas Bersih
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(vertical: 8),
                                                   child: Row(
@@ -392,7 +384,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
               ),
             ),
 
-            // Grafik Pemasukan
             _buildChartCard(
                 title: 'Pemasukan Tahun $currentYear',
                 data: penjualan,
@@ -400,7 +391,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                     'Total: ${currencyFormatter.format(penjualan.reduce((a, b) => a + b))}',
                 color: Colors.green),
 
-            // Grafik Pengeluaran
             _buildChartCard(
                 title: 'Pengeluaran Tahun $currentYear',
                 data: pengeluaran,
@@ -419,19 +409,17 @@ class _KeuanganPageState extends State<KeuanganPage> {
     required String totalText,
     required Color color,
   }) {
-    // Find max value for dynamic interval calculation
     final maxValue = data.reduce((curr, next) => curr > next ? curr : next);
 
-    // Calculate appropriate interval based on max value
     double interval = 1000000;
     if (maxValue > 10000000) {
       interval = 40000000;
     }
     if (maxValue > 50000000) {
-      interval = 80000000; // use 10M interval for values > 50M
+      interval = 80000000;
     }
     if (maxValue > 100000000) {
-      interval = 200000000; // use 25M interval for values > 100M
+      interval = 200000000;
     }
 
     return Container(
@@ -512,7 +500,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
                                     interval: interval,
                                     reservedSize: 42,
                                     getTitlesWidget: (value, meta) {
-                                      // Format dalam Miliar jika nilai > 1M
                                       if (value >= 1000000) {
                                         return Text(
                                           '${(value / 1000000).toStringAsFixed(1)}M',

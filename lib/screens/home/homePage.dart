@@ -2,7 +2,6 @@ import 'package:bounce_tapper/bounce_tapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:umkmfirebase/models/catatan.dart';
-import 'package:umkmfirebase/models/firebaseUser.dart';
 import 'package:umkmfirebase/models/userModel.dart';
 import 'package:umkmfirebase/screens/invoice/invoicePage.dart';
 import 'package:umkmfirebase/screens/pengingat/pengingatPage.dart';
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen.shade50, // Background color yang lebih terang
+      backgroundColor: Colors.lightGreen.shade50,
 
       body: Padding(
         padding: EdgeInsets.only(top: 16),
@@ -60,16 +59,13 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Header Section
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: headerSection(),
               ),
 
-              // Menu Cards
               showMenu(),
 
-              // Informasi dan Pengingat
               infoAndReminderSection(),
 
             ],
@@ -83,7 +79,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       padding: EdgeInsets.only(left: 2, right: 40,top: 4, bottom: 4),
       decoration: BoxDecoration(
-        color: Colors.teal[700], // Warna latar belakang header
+        color: Colors.teal[700],
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
@@ -129,7 +125,6 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.symmetric(vertical: 20.0),
       child: Column(
         children: [
-          // First Row of Menu
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -139,7 +134,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           SizedBox(height: 5),
-          // Second Row of Menu
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -218,7 +212,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: BounceTapper(
         child: Card(
-          color: Colors.teal[400], // Warna Card untuk menu
+          color: Colors.teal[400],
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Container(
@@ -244,7 +238,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Section untuk menampilkan informasi bisnis
   Widget infoAndReminderSection() {
     return Container(
       alignment: Alignment.bottomCenter,

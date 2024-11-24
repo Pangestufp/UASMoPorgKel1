@@ -208,16 +208,15 @@ class _RegisterState extends State<Register> {
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        // Supaya ukuran Row sesuai dengan kontennya
         children: [
           Icon(
-            Icons.arrow_back_ios, // Ikon panah balik
-            color: Colors.white, // Warna ikon
+            Icons.arrow_back_ios,
+            color: Colors.white,
           ),
-          SizedBox(width: 8), // Jarak antara ikon dan teks
+          SizedBox(width: 8),
           Text(
             "Kembali Login",
-            style: TextStyle(color: Colors.white), // Gaya teks
+            style: TextStyle(color: Colors.white),
           ),
         ],
       ),
@@ -228,9 +227,8 @@ class _RegisterState extends State<Register> {
       borderRadius: BorderRadius.circular(30),
       child: MaterialButton(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-        // Mengatur padding supaya tombol lebih kompak
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30), // Ujung tombol melengkung
+          borderRadius: BorderRadius.circular(30),
         ),
         onPressed: () async {
           if (_globalKey.currentState!.validate()) {
@@ -250,13 +248,13 @@ class _RegisterState extends State<Register> {
         child: Text(
           "Register",
           style: TextStyle(
-              fontSize: 16, color: Colors.black), // Gaya teks tombol
+              fontSize: 16, color: Colors.black),
         ),
       ),
     );
 
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Mengizinkan layar menyesuaikan saat keyboard muncul
+      resizeToAvoidBottomInset: true,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -269,7 +267,7 @@ class _RegisterState extends State<Register> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 50.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran kolom
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 LottieBuilder.asset(
