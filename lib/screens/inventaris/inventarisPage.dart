@@ -8,7 +8,8 @@ import 'package:umkmfirebase/services/appServices.dart';
 
 class InventarisPage extends StatefulWidget {
   final UserModel user;
-  InventarisPage({super.key, required this.user});
+  final Future<void> Function() updateJumlahPengingat;
+  InventarisPage({super.key, required this.user, required this.updateJumlahPengingat});
 
   @override
   State<InventarisPage> createState() => _InventarisPageState();
@@ -76,7 +77,7 @@ class _InventarisPageState extends State<InventarisPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              TambahkanStock(user: widget.user)),
+                              TambahkanStock(user: widget.user, updateJumlahPengingat: widget.updateJumlahPengingat,)),
                     );
                   },
                 ),

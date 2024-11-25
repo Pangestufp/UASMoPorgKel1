@@ -8,7 +8,9 @@ import 'package:umkmfirebase/services/appServices.dart';
 
 class TambahkanStock extends StatefulWidget {
   final UserModel user;
-  TambahkanStock({super.key, required this.user});
+  final Future<void> Function() updateJumlahPengingat;
+  TambahkanStock({super.key, required this.user,required this.updateJumlahPengingat});
+
 
   @override
   State<TambahkanStock> createState() => _TambahkanStockState();
@@ -329,6 +331,8 @@ class _TambahkanStockState extends State<TambahkanStock> {
                                                         _selectedDate.toString(),
                                                     isi:
                                                         "Item(${barang.namaBarang}) sejumlah ${int.parse(_stockController.text)} belum lunas"));
+
+                                                await widget.updateJumlahPengingat();
                                               }
                                               setState(() {
                                                 _stockController.clear();

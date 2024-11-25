@@ -47,6 +47,72 @@ class _BottomNavState extends State<BottomNav> {
     fetchUserData();
   }
 
+  void showStockReminderPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey[50],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Column(
+            children: [
+              Icon(
+                Icons.warning_rounded,
+                size: 40,
+                color: Colors.orange[700],
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Pengingat Stock",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[800],
+                ),
+              ),
+              Divider(thickness: 2),
+            ],
+          ),
+          content: Container(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Anda memiliki ${jumlahPengingat} stok yang belum dilunaskan.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.check_circle, color: Colors.teal[700]),
+              label: Text(
+                "Oke",
+                style: TextStyle(
+                  color: Colors.teal[700],
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
   Future<void> fetchUserData() async {
     String? uid = widget.firebaseUser.uid;
     UserModel? fetchedUser = await AppServices.getUserData(uid!);
@@ -55,7 +121,7 @@ class _BottomNavState extends State<BottomNav> {
 
       _listPages = [
         HomePage(changePage: _changePage, user: user!),
-        InventarisPage(user: user!),
+        InventarisPage(user: user!, updateJumlahPengingat: updateJumlahPengingat,),
         CatatanPage(user: user!),
         PenjualanPage(
           user: user!,
@@ -74,8 +140,15 @@ class _BottomNavState extends State<BottomNav> {
       _currentPage = _listPages[0];
       _currentNamePage = _listNamePages[0];
       await getJumlahPengingat();
+      if(jumlahPengingat!>0){
+        showStockReminderPopup(context);
+      }
 
     });
+  }
+
+  Future<void> updateJumlahPengingat() async {
+    await getJumlahPengingat();
   }
 
   void _changePage(int selectedIndex) {
