@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "835125719882",
-    "project_id": "umkm-55248",
-    "storage_bucket": "umkm-55248.firebasestorage.app"
+    "project_number": "459728804305",
+    "project_id": "managementumkm-26ae6",
+    "storage_bucket": "managementumkm-26ae6.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:835125719882:android:0fba05603dc59d0dbb07b3",
+        "mobilesdk_app_id": "1:459728804305:android:814069a8b9bec83c95a8f0",
         "android_client_info": {
           "package_name": "com.example.umkmfirebase"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBirvUREkiQwr1Q6dV6l6kBHitUmQOvThU"
+          "current_key": "AIzaSyCxCoKXUAptLqx6VZDMPovYIggCKHNgUzU"
         }
       ],
       "services": {
