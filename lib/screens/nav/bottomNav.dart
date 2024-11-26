@@ -120,7 +120,7 @@ class _BottomNavState extends State<BottomNav> {
       user = fetchedUser;
 
       _listPages = [
-        HomePage(changePage: _changePage, user: user!),
+        HomePage(changePage: _changePage, user: user!, updateJumlahPengingat: updateJumlahPengingat,),
         InventarisPage(user: user!, updateJumlahPengingat: updateJumlahPengingat,),
         CatatanPage(user: user!),
         PenjualanPage(
@@ -298,7 +298,7 @@ class _BottomNavState extends State<BottomNav> {
                               onTap: () {
                                 Navigator.pop(context);
                                 Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => PengingatPage(user: user!,)));
+                                    MaterialPageRoute(builder: (context) => PengingatPage(user: user!,updateJumlahPengingat: updateJumlahPengingat,)));
                               },
                             ),
                             Divider(color: Colors.teal[700],),

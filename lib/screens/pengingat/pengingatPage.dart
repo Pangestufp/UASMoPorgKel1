@@ -6,7 +6,8 @@ import 'package:umkmfirebase/services/appServices.dart';
 
 class PengingatPage extends StatefulWidget {
   final UserModel user;
-  PengingatPage({super.key, required this.user});
+  final Future<void> Function() updateJumlahPengingat;
+  PengingatPage({super.key, required this.user, required this.updateJumlahPengingat});
 
   @override
   State<PengingatPage> createState() => _PengingatPageState();
@@ -57,6 +58,7 @@ class _PengingatPageState extends State<PengingatPage> {
                   AppServices.deletePengingat(pengingat);
 
                   await _fetchPengingatList();
+                  await widget.updateJumlahPengingat();
                   setState(() {
 
                   });

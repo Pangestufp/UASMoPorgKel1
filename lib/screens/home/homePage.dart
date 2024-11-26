@@ -10,8 +10,8 @@ import 'package:umkmfirebase/services/appServices.dart';
 class HomePage extends StatefulWidget {
   final Function(int) changePage;
   final UserModel user;
-
-  HomePage({super.key, required this.changePage, required this.user});
+  final Future<void> Function() updateJumlahPengingat;
+  HomePage({super.key, required this.changePage, required this.user, required this.updateJumlahPengingat});
 
   @override
   State createState() => _HomePageState();
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>PengingatPage(user: widget.user)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>PengingatPage(user: widget.user, updateJumlahPengingat: widget.updateJumlahPengingat,)));
                 },
                 child: BounceTapper(
                   child: Card(
