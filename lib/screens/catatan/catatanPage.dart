@@ -295,6 +295,7 @@ class _CatatanPageState extends State<CatatanPage> {
                                     AppServices.deleteCatatan(catatan);
                                     Navigator.pop(context);
                                     await _fetchCatatanList();
+                                    await keuntunganBersih();
                                     setState(() {});
                                   },
                                   icon: Icon(Icons.check_circle,
