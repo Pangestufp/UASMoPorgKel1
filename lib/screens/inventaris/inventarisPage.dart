@@ -60,26 +60,41 @@ class _InventarisPageState extends State<InventarisPage> {
                 _buildCard(
                   "Tambahkan Barang",
                   Icons.add_box,
-                  () {
+                  () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
                               TambahkanProduk(user: widget.user)),
-                    );
+                    ).then((_)async{
+                      await _fetchBarangList();
+
+                      setState(() {
+
+                      });
+                    });
+
                   },
                 ),
                 _buildCard(
                   "Tambahkan Stok",
                   Icons.inventory,
-                  () {
+                  () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
                               TambahkanStock(user: widget.user, updateJumlahPengingat: widget.updateJumlahPengingat,)),
-                    );
+                    ).then((_)async{
+                      await _fetchBarangList();
+
+                      setState(() {
+
+                      });
+                    });
+
                   },
+
                 ),
               ],
             ),
